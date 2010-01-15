@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-mVersion = "0.1.1"
+mVersion = "0.1.3"
 
 #******************************************************************************
 #
@@ -35,7 +35,7 @@ def name():
 	return "RasterCalc"
 
 def description():
-	return "Raster manipulation plugin"
+	return "Perform raster algebra operations"
 
 def version():
 	return mVersion

@@ -75,6 +75,7 @@ class RasterCalcPlugin( object ):
       return None
 
     self.actionRun = QAction( QIcon( ":/rastercalc.png" ), "RasterCalc", self.iface.mainWindow() )
+    self.actionRun.setStatusTip( QCoreApplication.translate( "RasterCalc", "Perform raster algebra operations" ) )
     self.actionAbout = QAction( QIcon( ":/about.png" ), "About", self.iface.mainWindow() )
 
     QObject.connect( self.actionRun, SIGNAL( "activated()" ), self.run )
@@ -87,7 +88,8 @@ class RasterCalcPlugin( object ):
  
   def unload( self ):
     self.iface.removePluginMenu( "RasterCalc", self.actionRun )
-    self.iface.removeToolBarIcon( self.action )
+    self.iface.removePluginMenu( "RasterCalc", self.actionAbout )
+    self.iface.removeToolBarIcon( self.actionRun )
 
   def about( self ):
     QMessageBox.information( self.iface.mainWindow(), "About RasterCalc", "Author: GIS-Lab.info" )

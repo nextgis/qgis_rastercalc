@@ -1,6 +1,7 @@
 <RCC>
   <qresource>
     <file>rastercalc.png</file>
+    <file>about.png</file>
   </qresource>
 </RCC>
 

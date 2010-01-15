@@ -74,14 +74,23 @@ class RasterCalcPlugin( object ):
                            QCoreApplication.translate( "RasterCalc", "This version of RasterCalc requires at least QGIS version 1.0.0\nPlugin will not be enabled." ) )
       return None
 
-    self.action = QAction( QIcon( ":/rastercalc.png" ), "RasterCalc", self.iface.mainWindow() )
-    QObject.connect( self.action, SIGNAL( "activated()" ), self.run )
-    self.iface.addToolBarIcon( self.action )
-    self.iface.addPluginToMenu( "RasterCalc", self.action )
+    self.actionRun = QAction( QIcon( ":/rastercalc.png" ), "RasterCalc", self.iface.mainWindow() )
+    self.actionAbout = QAction( QIcon( ":/about.png" ), "About", self.iface.mainWindow() )
 
+    QObject.connect( self.actionRun, SIGNAL( "activated()" ), self.run )
+    QObject.connect( self.actionAbout, SIGNAL( "activated()" ), self.about )
+
+    self.iface.addPluginToMenu( "RasterCalc", self.actionRun )
+    self.iface.addPluginToMenu( "RasterCalc", self.actionAbout )
+
+    self.iface.addToolBarIcon( self.actionRun )
+ 
   def unload( self ):
-    self.iface.removePluginMenu( "RasterCalc", self.action )
+    self.iface.removePluginMenu( "RasterCalc", self.actionRun )
     self.iface.removeToolBarIcon( self.action )
+
+  def about( self ):
+    QMessageBox.information( self.iface.mainWindow(), "About RasterCalc", "Author: GIS-Lab.info" )
 
   def run( self ):
     # check is all necessary modules are available

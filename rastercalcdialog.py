@@ -47,6 +47,8 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     QDialog.__init__( self )
     self.setupUi( self )
     
+    QObject.connect( self.buttonBox, SIGNAL( "helpRequested()" ), self.showHelp )
+
     # simple operations
     QObject.connect( self.btnPower, SIGNAL( "clicked()" ), self.insertSimpleOp )
     QObject.connect( self.btnBand, SIGNAL( "clicked()" ), self.insertSimpleOp )
@@ -178,6 +180,9 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
       else:
         paren =  " " + paren
       self.commandTextEdit.insertPlainText( paren )
+
+  def showHelp( self ):
+    pass
 
   def accept( self ):
     #TODO: добавлять в выходной растр информацию о проекции

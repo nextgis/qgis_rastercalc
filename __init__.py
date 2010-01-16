@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-mVersion = "0.1.5"
+mVersion = "0.1.6"
 
 #******************************************************************************
 #
@@ -9,7 +9,6 @@ mVersion = "0.1.5"
 # Raster manipulation plugin.
 # 
 # Based on rewritten rasterlang plugin (C) 2008 by Barry Rowlingson
-# and modified example SimpleCalc from pyparsing module
 #
 # Copyright (C) 2009 GIS-Lab (http://gis-lab.info) and
 # Alexander Bruy (alexander.bruy@gmail.com)

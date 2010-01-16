@@ -2,30 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="ru_RU">
 <context>
-    <name>AboutDialog</name>
-    <message>
-        <location filename="aboutdialog.py" line="86"/>
-        <source>
-    The goal of RasterCalc is to provide easy to use and powerfull tool for raster algebra. Only layers with same grid size and extent are supported.
-
-    If you would like to report a bug, make suggestion or have a question about the plugin, feel free to contact with authors:
-          http://gis-lab.info/contacts
-          or alexander.bruy@gmail.com
-
-    LICENSING INFORMATION
-    RasterCalc is copyright (C) 2010 Maxim Dubinin and Alexander Bruy
-    Some code adapted from RasterLang (C) 2008 Barry Rowlingson
-
-    This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
-    
-    This code is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-    A copy of the GNU General Public License is available on the World Wide Web at &lt;http://www.gnu.org/copyleft/gpl.html&gt;. You can also obtain it by writing to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
-    </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AboutDialogBase</name>
     <message>
         <location filename="aboutdialogbase.ui" line="14"/>
@@ -33,61 +9,105 @@
         <translation>О RasterCalc</translation>
     </message>
     <message>
-        <location filename="aboutdialogbase.ui" line="36"/>
+        <location filename="aboutdialogbase.ui" line="27"/>
         <source>RasterCalc</source>
         <translation>RasterCalc</translation>
     </message>
     <message>
-        <location filename="aboutdialogbase.ui" line="43"/>
+        <location filename="aboutdialogbase.ui" line="37"/>
         <source>Version x.x.x</source>
         <translation>Версия x.x.x</translation>
     </message>
     <message>
-        <location filename="aboutdialogbase.ui" line="104"/>
+        <location filename="aboutdialogbase.ui" line="47"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Performs raster algebra operations&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Developers:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        Alexander Bruy&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        Maxim Dubinin&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Homepage:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        &lt;a href=&quot;http://gis-lab.info/qa/rastercalc.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ee;&quot;&gt;http://gis-lab.info/qa/rastercalc.html&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        &lt;a href=&quot;http://gis-lab.info/qa/rastercalc-eng.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ee;&quot;&gt;http://gis-lab.info/qa/rastercalc-eng.html&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Performs raster algebra operations&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Разработчики:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        Alexander Bruy&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        Maxim Dubinin&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Сайт:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        &lt;a href=&quot;http://gis-lab.info/qa/rastercalc.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ee;&quot;&gt;http://gis-lab.info/qa/rastercalc.html&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        &lt;a href=&quot;http://gis-lab.info/qa/rastercalc-eng.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ee;&quot;&gt;http://gis-lab.info/qa/rastercalc-eng.html&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="aboutdialogbase.ui" line="47"/>
+        <source>Performs raster algebra operations</source>
+        <translation>Удобный и функциональный растровый калькулятор</translation>
+    </message>
+    <message>
+        <location filename="aboutdialogbase.ui" line="54"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Developers:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        Alexander Bruy&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        Maxim Dubinin&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Homepage:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        &lt;a href=&quot;http://gis-lab.info/qa/rastercalc.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ee;&quot;&gt;http://gis-lab.info/qa/rastercalc.html&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        &lt;a href=&quot;http://gis-lab.info/qa/rastercalc-eng.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ee;&quot;&gt;http://gis-lab.info/qa/rastercalc-eng.html&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Разработчики:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        Alexander Bruy&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        Maxim Dubinin&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Сайт:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        &lt;a href=&quot;http://gis-lab.info/qa/rastercalc.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ee;&quot;&gt;http://gis-lab.info/qa/rastercalc.html&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;        &lt;a href=&quot;http://gis-lab.info/qa/rastercalc-eng.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ee;&quot;&gt;http://gis-lab.info/qa/rastercalc-eng.html&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>RasterCalc</name>
     <message>
-        <location filename="rastercalc.py" line="74"/>
+        <location filename="rastercalc.py" line="73"/>
         <source>Quantum GIS version detected: </source>
         <translation>Обнаружена Quantum GIS версии: </translation>
     </message>
     <message>
-        <location filename="rastercalc.py" line="75"/>
+        <location filename="rastercalc.py" line="74"/>
         <source>This version of RasterCalc requires at least QGIS version 1.0.0
 Plugin will not be enabled.</source>
         <translation>Эта версия RasterCalc требует наличия QGIS версии 1.0.0 и выше
 Расширение не будет загружено.</translation>
     </message>
     <message>
-        <location filename="rastercalc.py" line="116"/>
+        <location filename="rastercalc.py" line="115"/>
         <source>Plugin error</source>
         <translation>Ошибка плагина</translation>
     </message>
     <message>
-        <location filename="rastercalc.py" line="104"/>
+        <location filename="rastercalc.py" line="103"/>
         <source>Couldn&apos;t import Python module &apos;pyparsing&apos;. Without it you won&apos;t be able to run RasterCalc.</source>
         <translation>Не могу импортировать Python модуль &apos;pyparsing&apos;. Без этого модуля запуск RasterCalc не возможен.</translation>
     </message>
     <message>
-        <location filename="rastercalc.py" line="110"/>
+        <location filename="rastercalc.py" line="109"/>
         <source>Couldn&apos;t import Python module &apos;osgeo.gdal&apos;. Without it you won&apos;t be able to run PasterCalc.</source>
         <translation>Не могу импортировать Python модуль &apos;osgeo.gdal&apos;. Без этого модуля запуск RasterCalc не возможен.</translation>
     </message>
     <message>
-        <location filename="rastercalc.py" line="116"/>
+        <location filename="rastercalc.py" line="115"/>
         <source>Couldn&apos;t import Python module &apos;numpy&apos;. Without it you won&apos;t be able to run RasterCalc.</source>
         <translation>Не могу импортировать Python модуль &apos;numpy&apos;. Без этого модуля запуск RasterCalc не возможен.</translation>
     </message>
     <message>
-        <location filename="rastercalc.py" line="79"/>
+        <location filename="rastercalc.py" line="78"/>
         <source>Perform raster algebra operations</source>
         <translation>Растровая алгебра</translation>
     </message>
@@ -315,67 +335,67 @@ Plugin will not be enabled.</source>
         <translation>Добавить полученный растр на карту</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="81"/>
+        <location filename="rastercalcdialog.py" line="80"/>
         <source>Calculate</source>
         <translation>Рассчитать</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="205"/>
+        <location filename="rastercalcdialog.py" line="204"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="187"/>
+        <location filename="rastercalcdialog.py" line="186"/>
         <source>Please specify output raster</source>
         <translation>Пожалуйста, укажите выходной растр</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="199"/>
+        <location filename="rastercalcdialog.py" line="198"/>
         <source>Running...</source>
         <translation>Выполняется...</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="205"/>
+        <location filename="rastercalcdialog.py" line="204"/>
         <source>Result is not an array.</source>
         <translation>Результат не является массивом.</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="206"/>
+        <location filename="rastercalcdialog.py" line="205"/>
         <source>Failed</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="231"/>
+        <location filename="rastercalcdialog.py" line="230"/>
         <source>Completed</source>
         <translation>Завершено</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="249"/>
+        <location filename="rastercalcdialog.py" line="248"/>
         <source>Syntax error</source>
         <translation>Синтаксическая ошибка</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="255"/>
+        <location filename="rastercalcdialog.py" line="254"/>
         <source>Expression must contain at least one layer</source>
         <translation>Выражение должно содержать как минимум один раст</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="262"/>
+        <location filename="rastercalcdialog.py" line="261"/>
         <source>Unknown raster</source>
         <translation>Неизвестный растр</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="269"/>
+        <location filename="rastercalcdialog.py" line="268"/>
         <source>In expression must be layers from one group</source>
         <translation>В выражении можно использовать только растры из одной группы</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="274"/>
+        <location filename="rastercalcdialog.py" line="273"/>
         <source>Expression is valid</source>
         <translation>Корректное выражение</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="278"/>
+        <location filename="rastercalcdialog.py" line="277"/>
         <source>Save GeoTiff file</source>
         <translation>Сохранить файл GeoTiff</translation>
     </message>

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'rastercalcdialogbase.ui'
 #
-# Created: Thu Jan 14 19:04:49 2010
+# Created: Sat Jan 16 15:54:43 2010
 #      by: PyQt4 UI code generator 4.5.2
 #
 # WARNING! All changes made in this file will be lost!

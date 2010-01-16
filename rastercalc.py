@@ -35,6 +35,8 @@ from PyQt4.QtGui import *
 from qgis.core import *
 from qgis.gui import *
 
+import aboutdialog
+
 import resources
 
 class RasterCalcPlugin( object ):
@@ -92,7 +94,8 @@ class RasterCalcPlugin( object ):
     self.iface.removeToolBarIcon( self.actionRun )
 
   def about( self ):
-    QMessageBox.information( self.iface.mainWindow(), "About RasterCalc", "Author: GIS-Lab.info" )
+    dlg = aboutdialog.AboutDialog()
+    dlg.exec_()
 
   def run( self ):
     # check is all necessary modules are available

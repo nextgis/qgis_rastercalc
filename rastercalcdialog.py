@@ -47,8 +47,6 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     QDialog.__init__( self )
     self.setupUi( self )
     
-    QObject.connect( self.buttonBox, SIGNAL( "helpRequested()" ), self.showHelp )
-
     # simple operations
     QObject.connect( self.btnPower, SIGNAL( "clicked()" ), self.insertSimpleOp )
     QObject.connect( self.btnBand, SIGNAL( "clicked()" ), self.insertSimpleOp )

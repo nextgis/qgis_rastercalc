@@ -2,38 +2,94 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="ru_RU">
 <context>
+    <name>AboutDialog</name>
+    <message>
+        <location filename="aboutdialog.py" line="86"/>
+        <source>
+    The goal of RasterCalc is to provide easy to use and powerfull tool for raster algebra. Only layers with same grid size and extent are supported.
+
+    If you would like to report a bug, make suggestion or have a question about the plugin, feel free to contact with authors:
+          http://gis-lab.info/contacts
+          or alexander.bruy@gmail.com
+
+    LICENSING INFORMATION
+    RasterCalc is copyright (C) 2010 Maxim Dubinin and Alexander Bruy
+    Some code adapted from RasterLang (C) 2008 Barry Rowlingson
+
+    This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+    
+    This code is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+    A copy of the GNU General Public License is available on the World Wide Web at &lt;http://www.gnu.org/copyleft/gpl.html&gt;. You can also obtain it by writing to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+    </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AboutDialogBase</name>
+    <message>
+        <location filename="aboutdialogbase.ui" line="14"/>
+        <source>About RasterCalc</source>
+        <translation>О RasterCalc</translation>
+    </message>
+    <message>
+        <location filename="aboutdialogbase.ui" line="36"/>
+        <source>RasterCalc</source>
+        <translation>RasterCalc</translation>
+    </message>
+    <message>
+        <location filename="aboutdialogbase.ui" line="43"/>
+        <source>Version x.x.x</source>
+        <translation>Версия x.x.x</translation>
+    </message>
+    <message>
+        <location filename="aboutdialogbase.ui" line="104"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>RasterCalc</name>
     <message>
-        <location filename="rastercalc.py" line="72"/>
+        <location filename="rastercalc.py" line="74"/>
         <source>Quantum GIS version detected: </source>
         <translation>Обнаружена Quantum GIS версии: </translation>
     </message>
     <message>
-        <location filename="rastercalc.py" line="73"/>
+        <location filename="rastercalc.py" line="75"/>
         <source>This version of RasterCalc requires at least QGIS version 1.0.0
 Plugin will not be enabled.</source>
         <translation>Эта версия RasterCalc требует наличия QGIS версии 1.0.0 и выше
 Расширение не будет загружено.</translation>
     </message>
     <message>
-        <location filename="rastercalc.py" line="102"/>
+        <location filename="rastercalc.py" line="116"/>
         <source>Plugin error</source>
         <translation>Ошибка плагина</translation>
     </message>
     <message>
-        <location filename="rastercalc.py" line="90"/>
+        <location filename="rastercalc.py" line="104"/>
         <source>Couldn&apos;t import Python module &apos;pyparsing&apos;. Without it you won&apos;t be able to run RasterCalc.</source>
         <translation>Не могу импортировать Python модуль &apos;pyparsing&apos;. Без этого модуля запуск RasterCalc не возможен.</translation>
     </message>
     <message>
-        <location filename="rastercalc.py" line="96"/>
+        <location filename="rastercalc.py" line="110"/>
         <source>Couldn&apos;t import Python module &apos;osgeo.gdal&apos;. Without it you won&apos;t be able to run PasterCalc.</source>
         <translation>Не могу импортировать Python модуль &apos;osgeo.gdal&apos;. Без этого модуля запуск RasterCalc не возможен.</translation>
     </message>
     <message>
-        <location filename="rastercalc.py" line="102"/>
+        <location filename="rastercalc.py" line="116"/>
         <source>Couldn&apos;t import Python module &apos;numpy&apos;. Without it you won&apos;t be able to run RasterCalc.</source>
         <translation>Не могу импортировать Python модуль &apos;numpy&apos;. Без этого модуля запуск RasterCalc не возможен.</translation>
+    </message>
+    <message>
+        <location filename="rastercalc.py" line="79"/>
+        <source>Perform raster algebra operations</source>
+        <translation>Растровая алгебра</translation>
     </message>
 </context>
 <context>
@@ -264,62 +320,62 @@ Plugin will not be enabled.</source>
         <translation>Рассчитать</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="202"/>
+        <location filename="rastercalcdialog.py" line="205"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="184"/>
+        <location filename="rastercalcdialog.py" line="187"/>
         <source>Please specify output raster</source>
         <translation>Пожалуйста, укажите выходной растр</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="196"/>
+        <location filename="rastercalcdialog.py" line="199"/>
         <source>Running...</source>
         <translation>Выполняется...</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="202"/>
+        <location filename="rastercalcdialog.py" line="205"/>
         <source>Result is not an array.</source>
         <translation>Результат не является массивом.</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="203"/>
+        <location filename="rastercalcdialog.py" line="206"/>
         <source>Failed</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="228"/>
+        <location filename="rastercalcdialog.py" line="231"/>
         <source>Completed</source>
         <translation>Завершено</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="246"/>
+        <location filename="rastercalcdialog.py" line="249"/>
         <source>Syntax error</source>
         <translation>Синтаксическая ошибка</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="252"/>
+        <location filename="rastercalcdialog.py" line="255"/>
         <source>Expression must contain at least one layer</source>
         <translation>Выражение должно содержать как минимум один раст</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="260"/>
+        <location filename="rastercalcdialog.py" line="262"/>
         <source>Unknown raster</source>
         <translation>Неизвестный растр</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="267"/>
+        <location filename="rastercalcdialog.py" line="269"/>
         <source>In expression must be layers from one group</source>
         <translation>В выражении можно использовать только растры из одной группы</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="272"/>
+        <location filename="rastercalcdialog.py" line="274"/>
         <source>Expression is valid</source>
         <translation>Корректное выражение</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="276"/>
+        <location filename="rastercalcdialog.py" line="278"/>
         <source>Save GeoTiff file</source>
         <translation>Сохранить файл GeoTiff</translation>
     </message>

@@ -45,6 +45,10 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
   def __init__( self ):
     QDialog.__init__( self )
     self.setupUi( self )
+
+    self.statusBar = QStatusBar()
+    self.statusBar.setSizeGripEnabled( False )
+    self.verticalLayout_2.addWidget( self.statusBar )
     
     # simple operations
     QObject.connect( self.btnPower, SIGNAL( "clicked()" ), self.insertSimpleOp )
@@ -63,8 +67,6 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     # presets
     QObject.connect( self.cmbPresets, SIGNAL( "activated( QString )" ), self.insertPreset )
 
-    QObject.connect( self.btnBrowse, SIGNAL( "clicked()" ), self.selectOutputFile )
-
     # insert layer label when doubleclicked on tree
     QObject.connect( self.rasterTree, SIGNAL( "itemDoubleClicked( QTreeWidgetItem *, int )" ), self.insertRasterLabel )
     QObject.connect( self.rasterTree, SIGNAL( "itemClicked( QTreeWidgetItem *, int )" ), self.fillBandList )
@@ -74,7 +76,13 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     # check exression for validity
     QObject.connect( self.commandTextEdit, SIGNAL( "textChanged()" ), self.checkExpression )
 
+    # output raster selection
+    QObject.connect( self.btnBrowse, SIGNAL( "clicked()" ), self.selectOutputFile )
+ 
+    # expression manipulating buttons
     QObject.connect( self.btnClearCommand, SIGNAL( "clicked()" ), self.clearExpression )
+    QObject.connect( self.btnSaveExpression, SIGNAL( "clicked()" ), self.saveExpression )
+    QObject.connect( self.btnLoadExpression, SIGNAL( "clicked()" ), self.loadExpression )
 
     # disable Ok button
     self.buttonOk = self.buttonBox.button( QDialogButtonBox.Ok )
@@ -178,9 +186,6 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
         paren =  " " + paren
       self.commandTextEdit.insertPlainText( paren )
 
-  def showHelp( self ):
-    pass
-
   def accept( self ):
     #TODO: добавлять в выходной растр информацию о проекции
     if self.leFileName.text().isEmpty():
@@ -196,14 +201,16 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
 
     expression = rastercalcengine.pattern.parseString( str( self.commandTextEdit.toPlainText() ) )
 
-    self.lblStatusMessage.setText( self.tr( "Running..." ) )
+    #self.lblStatusMessage.setText( self.tr( "Running..." ) )
+    self.statusBar.showMessage( self.tr( "Running..." ) )
 
     result = rastercalcengine.evaluateStack( rastercalcengine.exprStack )
 
     # check is the result array
     if not rasterUtils.isArray( result ):
       QMessageBox.warning( self, self.tr( "Error" ), self.tr( "Result is not an array." ) )
-      lblStatusMessage.setText( self.tr( "Failed" ) )
+      #lblStatusMessage.setText( self.tr( "Failed" ) )
+      self.statusBar.showMessage( self.tr( "Failed" ) )
       return
 
     # time to write results on disk as raster file
@@ -215,10 +222,6 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     if not testFlag:
       result = res
     
-    #if self.leFileName.text().isEmpty():
-    #  QMessageBox.warning( self, self.tr( "Error" ), self.tr( "Please specify output raster" ) )
-    #  return
-
     fileName = os.path.normpath( str( self.leFileName.text() ) )
     pixelFormat = str( self.cmbPixelFormat.currentText() )
     rasterUtils.writeGeoTiff( result, [ extent.xMinimum(), extent.yMinimum(), extent.xMaximum(), extent.yMaximum() ], pixelFormat, fileName )
@@ -228,7 +231,8 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
       newLayer = QgsRasterLayer( fileName, os.path.basename( fileName ) )
       QgsMapLayerRegistry.instance().addMapLayer( newLayer )
 
-    self.lblStatusMessage.setText( self.tr( "Completed" ) )
+    #self.lblStatusMessage.setText( self.tr( "Completed" ) )
+    self.statusBar.showMessage( self.tr( "Completed" ) )
     
     #self.commandTextEdit.clear()
     #self.buttonOk.setEnabled( False )
@@ -238,7 +242,8 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
 
     # nothing entered, so exit
     if expr.isEmpty():
-      self.lblStatusMessage.setText( "" )
+      #self.lblStatusMessage.setText( "" )
+      self.statusBar.clearMessage()
       return
 
     # check syntax
@@ -246,32 +251,37 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     try:
       rastercalcengine.pattern.parseString( str( expr ) )
     except:
-      self.lblStatusMessage.setText( self.tr( "Syntax error" ) )
+      #self.lblStatusMessage.setText( self.tr( "Syntax error" ) )
+      self.statusBar.showMessage( self.tr( "Syntax error" ) )
       self.buttonOk.setEnabled( False )
       return
     
     # check for layers existense
     if len( rastercalcengine.rasterList ) < 1:
-      self.lblStatusMessage.setText( self.tr( "Expression must contain at least one layer" ) )
+      #self.lblStatusMessage.setText( self.tr( "Expression must contain at least one layer" ) )
+      self.statusBar.showMessage( self.tr( "Expression must contain at least one layer" ) )
       self.buttonOk.setEnabled( False )
       return
     
     # check for valid labels
     for l in rastercalcengine.rasterList:
       if l not in self.layerLabels:
-        self.lblStatusMessage.setText( self.tr( "Unknown raster" ) )
+        #self.lblStatusMessage.setText( self.tr( "Unknown raster" ) )
+        self.statusBar.showMessage( self.tr( "Unknown raster" ) )
         self.buttonOk.setEnabled( False )
         return
 
     # check layers compatibility
     groups = [ self.groups.findGroup( self.layerInfo[ l ] ) for l in rastercalcengine.rasterList ]
     if len( set( groups ) ) != 1:
-      self.lblStatusMessage.setText( self.tr( "In expression must be layers from one group" ) )
+      #self.lblStatusMessage.setText( self.tr( "In expression must be layers from one group" ) )
+      self.statusBar.showMessage( self.tr( "In expression must be layers from one group" ) )
       self.buttonOk.setEnabled( False )
       return
 
     # all ok
-    self.lblStatusMessage.setText( self.tr( "Expression is valid" ) )
+    #self.lblStatusMessage.setText( self.tr( "Expression is valid" ) )
+    self.statusBar.showMessage( self.tr( "Expression is valid" ) )
     self.buttonOk.setEnabled( True )
 
   def selectOutputFile( self ):
@@ -286,4 +296,38 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
         fileName += ".tif"
 
     self.leFileName.setText( fileName )
+
+  def saveExpression( self ):
+    fileName = QFileDialog.getSaveFileName( self, self.tr( "Select where to save the expression" ), ".", self.tr( "Expression files (*.exp *.EXP)" ) )
+
+    if fileName.isEmpty():
+      return
+
+    if not fileName.toLower().endsWith( ".exp" ):
+      fileName += ".exp"
+
+    file = QFile( fileName )
+    if not file.open( QIODevice.WriteOnly | QIODevice.Text ):
+      QMessageBox.warning( self, self.tr( "File saving error" ), self.tr( "Cannot write file %1:\n%2." ).arg( fileName ).arg( file.errorString ) )
+      return
+
+    outStream = QTextStream( file )
+    outStream << self.commandTextEdit.toPlainText()
+    file.close()
+
+  def loadExpression( self ):
+    fileName = QFileDialog.getOpenFileName( self, self.tr( "Select the file to open" ), ".", self.tr( "Expression files (*.exp *.EXP)" ) )
+
+    if fileName.isEmpty():
+      return
+
+    file = QFile( fileName )
+    if not file.open( QIODevice.ReadOnly | QIODevice.Text ):
+      QMessageBox.warning( self, self.tr( "File reading error" ), self.tr( "Cannot read file %1:\n%2." ).arg( fileName ).arg( file.errorString ) )
+      return
+
+    inStream = QTextStream( file )
+    expression = inStream.readAll()
+    self.commandTextEdit.setPlainText( expression )
+    file.close()
 

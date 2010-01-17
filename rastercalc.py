@@ -34,7 +34,9 @@ from PyQt4.QtGui import *
 from qgis.core import *
 from qgis.gui import *
 
-import aboutdialog
+#import aboutdialog
+
+from __init__ import mVersion
 
 import resources
 
@@ -93,8 +95,46 @@ class RasterCalcPlugin( object ):
     self.iface.removeToolBarIcon( self.actionRun )
 
   def about( self ):
-    dlg = aboutdialog.AboutDialog()
-    dlg.exec_()
+    dlgAbout = QDialog()
+    dlgAbout.setWindowTitle( QApplication.translate( "RasterCalc", "About RasterCalc", "Window title" ) )
+    lines = QVBoxLayout( dlgAbout )
+    title = QLabel( QApplication.translate( "RasterCalc", "<b>RasterCalc</b>" ) )
+    title.setAlignment( Qt.AlignHCenter | Qt.AlignVCenter )
+    lines.addWidget( title )
+    version = QLabel( QApplication.translate( "RasterCalc", "Version: %1" ).arg( mVersion ) )
+    version.setAlignment( Qt.AlignHCenter | Qt.AlignVCenter )
+    lines.addWidget( version )
+    lines.addWidget( QLabel( QApplication.translate( "RasterCalc", "This plugin performs arfmethics operations\non single- and multiband rasters" ) ) )
+    lines.addWidget( QLabel( QApplication.translate( "RasterCalc", "<b>Developers:</b>" ) ) )
+    lines.addWidget( QLabel( "  Alexander Bruy" ) )
+    lines.addWidget( QLabel( "  Maxim Dubinin" ) )
+    lines.addWidget( QLabel( "  Barry Rowlingson (portions of code)" ) )
+    lines.addWidget( QLabel( QApplication.translate( "RasterCalc", "<b>Homepage:</b>") ) )
+
+    overrideLocale = QSettings().value( "locale/overrideFlag", QVariant( False ) ).toBool()
+    if not overrideLocale:
+      localeFullName = QLocale.system().name()
+    else:
+      localeFullName = QSettings().value( "locale/userLocale", QVariant( "" ) ).toString()
+
+    localeShortName = localeFullName[ 0:2 ]
+    if localeShortName in [ "ru", "uk" ]:
+      link = QLabel( "<a href=\"http://gis-lab.info/qa/rastercalc.html\">http://gis-lab.info/qa/rastercalc.html</a>" )
+    else:
+      link = QLabel( "<a href=\"http://gis-lab,info/qa/rastercalc-eng.html\">http://gis-lab.info/qa/rastercalc-eng.html</a>" )
+    
+    link.setOpenExternalLinks( True )
+    lines.addWidget( link )
+    
+    btnClose = QPushButton( QApplication.translate( "RasterCalc", "Close" ) )
+    lines.addWidget( btnClose )
+    QObject.connect( btnClose, SIGNAL( "clicked()" ), dlgAbout, SLOT( "close()" ) )
+    
+    dlgAbout.exec_()
+
+
+    #dlg = aboutdialog.AboutDialog()
+    #dlg.exec_()
 
   def run( self ):
     # check is all necessary modules are available

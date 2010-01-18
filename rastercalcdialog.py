@@ -244,7 +244,11 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     if expr.isEmpty():
       #self.lblStatusMessage.setText( "" )
       self.statusBar.clearMessage()
+      self.btnSaveExpression.setEnabled( False )
+      self.btnOk.setEnabled( False )
       return
+
+    self.btnSaveExpression.setEnabled( True )
 
     # check syntax
     rastercalcengine.rasterList = set( [] )
@@ -265,6 +269,7 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     
     # check for valid labels
     for l in rastercalcengine.rasterList:
+      print l
       if l not in self.layerLabels:
         #self.lblStatusMessage.setText( self.tr( "Unknown raster" ) )
         self.statusBar.showMessage( self.tr( "Unknown raster" ) )

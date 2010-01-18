@@ -43,7 +43,8 @@ exprStack = []
 rasterList = set()
 
 def rasterName():
-  return Word( "[" + alphas, alphanums + "_-" + "]" )
+  #return Word( "[" + alphas, alphanums + "_-" + "]" )
+  return Combine( "[" + Word( alphas, alphanums + "_-" ) + "]" )
 
 def pushFirst( str, loc, toks ):
     global exprStack
@@ -82,7 +83,9 @@ floatnumber = Combine( integer +
                        Optional( e + integer )
                      )
 
-ident = Word( "[" + alphas, alphanums + "_-" + "]" )
+#ident = Word( "[" + alphas, alphanums + "_-" + "]" )
+ident = Combine( "[" + Word( alphas, alphanums + "_-" ) + "]" )
+fn = Word( alphas )
 
 plus  = Literal( "+" )
 minus = Literal( "-" )
@@ -97,7 +100,7 @@ assign = Literal( "=" )
 band = Literal( "@" )
 
 expr = Forward()
-atom = ( ( e | floatnumber | integer | ident.setParseAction( assignVar ) ).setParseAction(pushFirst) | 
+atom = ( ( e | floatnumber | integer | ident | fn + lpar + expr + rpar ).setParseAction(pushFirst) | 
          ( lpar + expr.suppress() + rpar )
        )
         

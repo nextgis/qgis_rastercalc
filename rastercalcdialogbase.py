@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'rastercalcdialogbase.ui'
 #
-# Created: Sun Jan 17 11:36:31 2010
+# Created: Mon Jan 18 18:06:15 2010
 #      by: PyQt4 UI code generator 4.5.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -129,6 +129,7 @@ class Ui_RasterCalcDialog(object):
         self.btnClearCommand.setObjectName("btnClearCommand")
         self.verticalLayout_4.addWidget(self.btnClearCommand)
         self.btnSaveExpression = QtGui.QPushButton(RasterCalcDialog)
+        self.btnSaveExpression.setEnabled(False)
         self.btnSaveExpression.setObjectName("btnSaveExpression")
         self.verticalLayout_4.addWidget(self.btnSaveExpression)
         self.btnLoadExpression = QtGui.QPushButton(RasterCalcDialog)

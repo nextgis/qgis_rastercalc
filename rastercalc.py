@@ -121,7 +121,7 @@ class RasterCalcPlugin( object ):
     if localeShortName in [ "ru", "uk" ]:
       link = QLabel( "<a href=\"http://gis-lab.info/qa/rastercalc.html\">http://gis-lab.info/qa/rastercalc.html</a>" )
     else:
-      link = QLabel( "<a href=\"http://gis-lab,info/qa/rastercalc-eng.html\">http://gis-lab.info/qa/rastercalc-eng.html</a>" )
+      link = QLabel( "<a href=\"http://gis-lab.info/qa/rastercalc-eng.html\">http://gis-lab.info/qa/rastercalc-eng.html</a>" )
     
     link.setOpenExternalLinks( True )
     lines.addWidget( link )

@@ -43,7 +43,6 @@ exprStack = []
 rasterList = set()
 
 def rasterName():
-  #return Word( "[" + alphas, alphanums + "_-" + "]" )
   return Combine( "[" + Word( alphas, alphanums + "_-" ) + "]" )
 
 def pushFirst( str, loc, toks ):
@@ -83,7 +82,6 @@ floatnumber = Combine( integer +
                        Optional( e + integer )
                      )
 
-#ident = Word( "[" + alphas, alphanums + "_-" + "]" )
 ident = Combine( "[" + Word( alphas, alphanums + "_-" ) + "]" )
 fn = Word( alphas )
 
@@ -100,7 +98,7 @@ assign = Literal( "=" )
 band = Literal( "@" )
 
 expr = Forward()
-atom = ( ( e | floatnumber | integer | ident | fn + lpar + expr + rpar ).setParseAction(pushFirst) | 
+atom = ( ( e | floatnumber | integer | ident.setParseAction( assignVar ) | fn + lpar + expr + rpar ).setParseAction(pushFirst) | 
          ( lpar + expr.suppress() + rpar )
        )
         
@@ -120,6 +118,15 @@ opn = { "+" : ( lambda a,b: numpy.add( a, b ) ),
         "/" : ( lambda a,b: numpy.divide( a, b ) ),
         "^" : ( lambda a,b: numpy.power( a, b) ) }
 
+func = { "sin": numpy.sin,
+         "asin": numpy.arcsin,
+         "cos": numpy.cos,
+         "acos": numpy.arccos,
+         "tan": numpy.tan,
+         "atan": numpy.arctan,
+         "exp": numpy.exp,
+         "log": numpy.log }
+
 # Recursive function that evaluates the stack
 def evaluateStack( s ):
   op = s.pop()
@@ -131,12 +138,18 @@ def evaluateStack( s ):
     return math.pi
   elif op == "E":
     return math.e
+  elif op in func:
+    op1 = evaluateStack( s )
+    return func[ op ]( op1 )
   elif re.search('^[\[a-zA-Z][a-zA-Z0-9_\-\]]*$',op):
     return returnVar( op )
   elif op == "@":
     num = evaluateStack( s )
     lay = evaluateStack( s )
     return getBand( lay, num )
+#  elif op in func:
+#    op1 = evaluateStack( s )
+#    return func[ op ]( op1 )
   elif re.search('^[-+]?[0-9]+$',op):
     return long( op )
   else:

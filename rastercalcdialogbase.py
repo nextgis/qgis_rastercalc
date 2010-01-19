@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'rastercalcdialogbase.ui'
 #
-# Created: Mon Jan 18 18:06:15 2010
+# Created: Tue Jan 19 19:42:03 2010
 #      by: PyQt4 UI code generator 4.5.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -65,35 +65,27 @@ class Ui_RasterCalcDialog(object):
         self.cmbPresets.addItem(QtCore.QString())
         self.gridLayout_2.addWidget(self.cmbPresets, 0, 0, 1, 3)
         self.btnSin = QtGui.QPushButton(self.frame)
-        self.btnSin.setEnabled(False)
         self.btnSin.setObjectName("btnSin")
         self.gridLayout_2.addWidget(self.btnSin, 1, 0, 1, 1)
         self.btnAsin = QtGui.QPushButton(self.frame)
-        self.btnAsin.setEnabled(False)
         self.btnAsin.setObjectName("btnAsin")
         self.gridLayout_2.addWidget(self.btnAsin, 1, 1, 1, 1)
         self.btnExp = QtGui.QPushButton(self.frame)
-        self.btnExp.setEnabled(False)
         self.btnExp.setObjectName("btnExp")
         self.gridLayout_2.addWidget(self.btnExp, 1, 2, 1, 1)
         self.btnCos = QtGui.QPushButton(self.frame)
-        self.btnCos.setEnabled(False)
         self.btnCos.setObjectName("btnCos")
         self.gridLayout_2.addWidget(self.btnCos, 2, 0, 1, 1)
         self.btnAcos = QtGui.QPushButton(self.frame)
-        self.btnAcos.setEnabled(False)
         self.btnAcos.setObjectName("btnAcos")
         self.gridLayout_2.addWidget(self.btnAcos, 2, 1, 1, 1)
         self.btnLog = QtGui.QPushButton(self.frame)
-        self.btnLog.setEnabled(False)
         self.btnLog.setObjectName("btnLog")
         self.gridLayout_2.addWidget(self.btnLog, 2, 2, 1, 1)
         self.btnTan = QtGui.QPushButton(self.frame)
-        self.btnTan.setEnabled(False)
         self.btnTan.setObjectName("btnTan")
         self.gridLayout_2.addWidget(self.btnTan, 3, 0, 1, 1)
         self.btnAtan = QtGui.QPushButton(self.frame)
-        self.btnAtan.setEnabled(False)
         self.btnAtan.setObjectName("btnAtan")
         self.gridLayout_2.addWidget(self.btnAtan, 3, 1, 1, 1)
         self.btnPower = QtGui.QPushButton(self.frame)

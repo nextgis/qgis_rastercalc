@@ -50,15 +50,26 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     self.statusBar.setSizeGripEnabled( False )
     self.verticalLayout_2.addWidget( self.statusBar )
     
-    # simple operations
-    QObject.connect( self.btnPower, SIGNAL( "clicked()" ), self.insertSimpleOp )
-    QObject.connect( self.btnBand, SIGNAL( "clicked()" ), self.insertSimpleOp )
+    # single operations ( band, power )
+    QObject.connect( self.btnPower, SIGNAL( "clicked()" ), self.insertSingleOp )
+    QObject.connect( self.btnBand, SIGNAL( "clicked()" ), self.insertSingleOp )
 
     # buttons for arifmethics operations
     QObject.connect( self.btnMul, SIGNAL( "clicked()" ), self.insertArifmOp )
     QObject.connect( self.btnDiv, SIGNAL( "clicked()" ), self.insertArifmOp )
     QObject.connect( self.btnSub, SIGNAL( "clicked()" ), self.insertArifmOp )
     QObject.connect( self.btnAdd, SIGNAL( "clicked()" ), self.insertArifmOp )
+
+    # buttons for functions
+    QObject.connect( self.btnSin, SIGNAL( "clicked()" ), self.insertFunction )
+    QObject.connect( self.btnAsin, SIGNAL( "clicked()" ), self.insertFunction )
+    QObject.connect( self.btnCos, SIGNAL( "clicked()" ), self.insertFunction  )
+    QObject.connect( self.btnAcos, SIGNAL( "clicked()" ), self.insertFunction  )
+    QObject.connect( self.btnTan, SIGNAL( "clicked()" ), self.insertFunction  )
+    QObject.connect( self.btnAtan, SIGNAL( "clicked()" ), self.insertFunction  )
+    QObject.connect( self.btnExp, SIGNAL( "clicked()" ), self.insertFunction  )
+    QObject.connect( self.btnLog, SIGNAL( "clicked()" ), self.insertFunction  )
+    QObject.connect( self.btnClip, SIGNAL( "clicked()" ), self.insertFunction  )
 
     # buttons for parentheses
     QObject.connect( self.btnRParen, SIGNAL( "clicked()" ), self.insertParen )
@@ -94,6 +105,10 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     self.manageGui()
 
   def manageGui( self ):
+    # restore loadCheckBox state
+    settings = QSettings()
+    self.loadCheckBox.setCheckState( settings.value( "/RasterCalc/addLayer", QVariant( False ) ).toInt()[ 0 ] )
+
     self.mapLayers = filter( lambda l: l.type() == l.RasterLayer, QgsMapLayerRegistry.instance().mapLayers().values() )
     # get names of all raster layers
     self.layerNames = [ str( z.name() ) for z in self.mapLayers ]
@@ -164,7 +179,7 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     elif preset == "Difference":
       self.commandTextEdit.insertPlainText( "[raster]@1 - [raster]@2" )
 
-  def insertSimpleOp( self ):
+  def insertSingleOp( self ):
     btn = self.sender()
     if btn.metaObject().className() == "QPushButton":
       btnText = btn.text()
@@ -175,6 +190,14 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     if btn.metaObject().className() == "QPushButton":
       opText = " " + btn.text() + " "
       self.commandTextEdit.insertPlainText( opText )
+
+  def insertFunction( self ):
+    btn = self.sender()
+    if btn.metaObject().className() == "QPushButton":
+      opText = btn.text()
+      self.commandTextEdit.insertPlainText( opText + "(  )" )
+      self.commandTextEdit.moveCursor( QTextCursor.Left )
+      self.commandTextEdit.moveCursor( QTextCursor.Left )
 
   def insertParen( self ):
     btn = self.sender()
@@ -201,7 +224,6 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
 
     expression = rastercalcengine.pattern.parseString( str( self.commandTextEdit.toPlainText() ) )
 
-    #self.lblStatusMessage.setText( self.tr( "Running..." ) )
     self.statusBar.showMessage( self.tr( "Running..." ) )
 
     result = rastercalcengine.evaluateStack( rastercalcengine.exprStack )
@@ -209,7 +231,6 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     # check is the result array
     if not rasterUtils.isArray( result ):
       QMessageBox.warning( self, self.tr( "Error" ), self.tr( "Result is not an array." ) )
-      #lblStatusMessage.setText( self.tr( "Failed" ) )
       self.statusBar.showMessage( self.tr( "Failed" ) )
       return
 
@@ -233,19 +254,21 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
 
     #self.lblStatusMessage.setText( self.tr( "Completed" ) )
     self.statusBar.showMessage( self.tr( "Completed" ) )
-    
-    #self.commandTextEdit.clear()
-    #self.buttonOk.setEnabled( False )
 
+  def reject( self ):
+    settings = QSettings()
+    settings.setValue( "/RasterCalc/addLayer", QVariant( self.loadCheckBox.checkState() )  )
+
+    QDialog.reject( self )
+    
   def checkExpression( self ):
     expr = self.commandTextEdit.toPlainText()
 
     # nothing entered, so exit
     if expr.isEmpty():
-      #self.lblStatusMessage.setText( "" )
       self.statusBar.clearMessage()
       self.btnSaveExpression.setEnabled( False )
-      self.btnOk.setEnabled( False )
+      self.buttonOk.setEnabled( False )
       return
 
     self.btnSaveExpression.setEnabled( True )
@@ -255,23 +278,20 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     try:
       rastercalcengine.pattern.parseString( str( expr ) )
     except:
-      #self.lblStatusMessage.setText( self.tr( "Syntax error" ) )
       self.statusBar.showMessage( self.tr( "Syntax error" ) )
       self.buttonOk.setEnabled( False )
       return
     
     # check for layers existense
     if len( rastercalcengine.rasterList ) < 1:
-      #self.lblStatusMessage.setText( self.tr( "Expression must contain at least one layer" ) )
       self.statusBar.showMessage( self.tr( "Expression must contain at least one layer" ) )
       self.buttonOk.setEnabled( False )
       return
     
     # check for valid labels
     for l in rastercalcengine.rasterList:
-      print l
+      #print l
       if l not in self.layerLabels:
-        #self.lblStatusMessage.setText( self.tr( "Unknown raster" ) )
         self.statusBar.showMessage( self.tr( "Unknown raster" ) )
         self.buttonOk.setEnabled( False )
         return
@@ -285,7 +305,6 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
       return
 
     # all ok
-    #self.lblStatusMessage.setText( self.tr( "Expression is valid" ) )
     self.statusBar.showMessage( self.tr( "Expression is valid" ) )
     self.buttonOk.setEnabled( True )
 

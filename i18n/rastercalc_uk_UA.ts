@@ -235,288 +235,293 @@ on single- and multiband rasters</source>
         <translation>Difference</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="128"/>
+        <location filename="rastercalcdialogbase.ui" line="125"/>
         <source>sin</source>
         <translation>sin</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="138"/>
+        <location filename="rastercalcdialogbase.ui" line="132"/>
         <source>asin</source>
         <translation>asin</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="148"/>
+        <location filename="rastercalcdialogbase.ui" line="139"/>
         <source>exp</source>
         <translation>exp</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="158"/>
+        <location filename="rastercalcdialogbase.ui" line="146"/>
         <source>cos</source>
         <translation>cos</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="168"/>
+        <location filename="rastercalcdialogbase.ui" line="153"/>
         <source>acos</source>
         <translation>acos</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="178"/>
+        <location filename="rastercalcdialogbase.ui" line="160"/>
         <source>log</source>
         <translation>log</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="188"/>
+        <location filename="rastercalcdialogbase.ui" line="167"/>
         <source>tan</source>
         <translation>tan</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="198"/>
+        <location filename="rastercalcdialogbase.ui" line="174"/>
         <source>atan</source>
         <translation>atan</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="205"/>
+        <location filename="rastercalcdialogbase.ui" line="181"/>
         <source>Raise to power</source>
         <translation>Піднесення до ступеню</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="208"/>
+        <location filename="rastercalcdialogbase.ui" line="184"/>
         <source>^</source>
         <translation>^</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="222"/>
+        <location filename="rastercalcdialogbase.ui" line="198"/>
         <source>Multiply arguments</source>
         <translation>Перемножити аргументи</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="225"/>
+        <location filename="rastercalcdialogbase.ui" line="201"/>
         <source>*</source>
         <translation>*</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="232"/>
+        <location filename="rastercalcdialogbase.ui" line="208"/>
         <source>Divide arguments</source>
         <translation>Поділити аргументи</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="235"/>
+        <location filename="rastercalcdialogbase.ui" line="211"/>
         <source>/</source>
         <translation>/</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="242"/>
+        <location filename="rastercalcdialogbase.ui" line="218"/>
         <source>Subtract argiments</source>
         <translation>Відняти аргументи</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="245"/>
+        <location filename="rastercalcdialogbase.ui" line="221"/>
         <source>-</source>
         <translation>-</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="252"/>
+        <location filename="rastercalcdialogbase.ui" line="228"/>
         <source>Add arguments</source>
         <translation>Скласти аргументи</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="255"/>
+        <location filename="rastercalcdialogbase.ui" line="231"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="276"/>
+        <location filename="rastercalcdialogbase.ui" line="252"/>
         <source>Clear</source>
         <translation>Очистити</translation>
     </message>
     <message>
         <location filename="rastercalcdialogbase.ui" line="303"/>
         <source>Pixel format</source>
-        <translation>Формат пікселя</translation>
+        <translation type="obsolete">Формат пікселя</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="311"/>
+        <location filename="rastercalcdialogbase.ui" line="290"/>
         <source>Byte</source>
         <translation>Byte</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="316"/>
+        <location filename="rastercalcdialogbase.ui" line="295"/>
         <source>UInt16</source>
         <translation>UInt16</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="321"/>
+        <location filename="rastercalcdialogbase.ui" line="300"/>
         <source>Int16</source>
         <translation>Int16</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="326"/>
+        <location filename="rastercalcdialogbase.ui" line="305"/>
         <source>UInt32</source>
         <translation>UInt32</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="331"/>
+        <location filename="rastercalcdialogbase.ui" line="310"/>
         <source>Int32</source>
         <translation>Int32</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="336"/>
+        <location filename="rastercalcdialogbase.ui" line="315"/>
         <source>Float32</source>
         <translation>Float32</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="341"/>
+        <location filename="rastercalcdialogbase.ui" line="320"/>
         <source>Float64</source>
         <translation>Float64</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="346"/>
+        <location filename="rastercalcdialogbase.ui" line="325"/>
         <source>CInt16</source>
         <translation>CInt16</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="351"/>
+        <location filename="rastercalcdialogbase.ui" line="330"/>
         <source>CInt32</source>
         <translation>CInt32</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="356"/>
+        <location filename="rastercalcdialogbase.ui" line="335"/>
         <source>CFloat32</source>
         <translation>CFloat32</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="361"/>
+        <location filename="rastercalcdialogbase.ui" line="340"/>
         <source>CFloat64</source>
         <translation>CFloat64</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="385"/>
+        <location filename="rastercalcdialogbase.ui" line="364"/>
         <source>Save as</source>
         <translation>Зберегти як</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="395"/>
+        <location filename="rastercalcdialogbase.ui" line="374"/>
         <source>Browse</source>
         <translation>Огляд</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="404"/>
+        <location filename="rastercalcdialogbase.ui" line="383"/>
         <source>Add result to the map canvas</source>
         <translation>Додати отриманий растр на карту</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="88"/>
+        <location filename="rastercalcdialog.py" line="99"/>
         <source>Calculate</source>
         <translation>Розрахувати</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="210"/>
+        <location filename="rastercalcdialog.py" line="232"/>
         <source>Error</source>
         <translation>Помилка</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="191"/>
+        <location filename="rastercalcdialog.py" line="214"/>
         <source>Please specify output raster</source>
         <translation>Будь ласка, вкажіть вихідний растр</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="204"/>
+        <location filename="rastercalcdialog.py" line="226"/>
         <source>Running...</source>
         <translation>Виконується...</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="210"/>
+        <location filename="rastercalcdialog.py" line="232"/>
         <source>Result is not an array.</source>
         <translation>Результат не є масивом.</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="212"/>
+        <location filename="rastercalcdialog.py" line="233"/>
         <source>Failed</source>
         <translation>Помилка</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="234"/>
+        <location filename="rastercalcdialog.py" line="255"/>
         <source>Completed</source>
         <translation>Закінчено</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="254"/>
+        <location filename="rastercalcdialog.py" line="280"/>
         <source>Syntax error</source>
         <translation>Синтаксична помилка</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="261"/>
+        <location filename="rastercalcdialog.py" line="286"/>
         <source>Expression must contain at least one layer</source>
         <translation>Вираз повинен містити як мінімум один раст</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="269"/>
+        <location filename="rastercalcdialog.py" line="294"/>
         <source>Unknown raster</source>
         <translation>Невідомий растр</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="277"/>
+        <location filename="rastercalcdialog.py" line="302"/>
         <source>In expression must be layers from one group</source>
         <translation>У виразі можна використовувати лише растри з однієї групи</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="283"/>
+        <location filename="rastercalcdialog.py" line="307"/>
         <source>Expression is valid</source>
         <translation>Коректний вираз</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="287"/>
+        <location filename="rastercalcdialog.py" line="311"/>
         <source>Save GeoTiff file</source>
         <translation>Зберегти файл GeoTiff</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="283"/>
+        <location filename="rastercalcdialogbase.ui" line="262"/>
         <source>Save</source>
         <translation>Зберегти</translation>
     </message>
     <message>
-        <location filename="rastercalcdialogbase.ui" line="290"/>
+        <location filename="rastercalcdialogbase.ui" line="269"/>
         <source>Load</source>
         <translation>Завантажити</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="300"/>
+        <location filename="rastercalcdialog.py" line="324"/>
         <source>Select where to save the expression</source>
         <translation>Збереження файла</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="318"/>
+        <location filename="rastercalcdialog.py" line="342"/>
         <source>Expression files (*.exp *.EXP)</source>
         <translation>Файли виразів (*.exp *.EXP)</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="310"/>
+        <location filename="rastercalcdialog.py" line="334"/>
         <source>File saving error</source>
         <translation>Помилка збереження</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="310"/>
+        <location filename="rastercalcdialog.py" line="334"/>
         <source>Cannot write file %1:
 %2.</source>
         <translation>Не можу записати файл %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="318"/>
+        <location filename="rastercalcdialog.py" line="342"/>
         <source>Select the file to open</source>
         <translation>Відкриття файла</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="325"/>
+        <location filename="rastercalcdialog.py" line="349"/>
         <source>File reading error</source>
         <translation>Помилка читання</translation>
     </message>
     <message>
-        <location filename="rastercalcdialog.py" line="325"/>
+        <location filename="rastercalcdialog.py" line="349"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>Не можу прочитати файл %1:
 %2.</translation>
+    </message>
+    <message>
+        <location filename="rastercalcdialogbase.ui" line="282"/>
+        <source>Data type</source>
+        <translation>Формат даних</translation>
     </message>
 </context>
 </TS>

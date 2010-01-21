@@ -279,7 +279,7 @@
      <item>
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Pixel format</string>
+        <string>Data type</string>
        </property>
       </widget>
      </item>

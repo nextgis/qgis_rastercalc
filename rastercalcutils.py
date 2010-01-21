@@ -140,7 +140,6 @@ def uniqueLabels( names ):
 
   validRaster = LineStart() + rasterName() + LineEnd()
   for name in names:
-    #print "name", name
     name1 = "[" + name + "]"
     try:
       ss = validRaster.parseString( str( name1 ) )

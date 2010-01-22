@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'rastercalcdialogbase.ui'
 #
-# Created: Tue Jan 19 19:42:03 2010
+# Created: Fri Jan 22 22:48:00 2010
 #      by: PyQt4 UI code generator 4.5.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -60,6 +60,11 @@ class Ui_RasterCalcDialog(object):
         self.gridLayout_2 = QtGui.QGridLayout()
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.cmbPresets = QtGui.QComboBox(self.frame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.cmbPresets.sizePolicy().hasHeightForWidth())
+        self.cmbPresets.setSizePolicy(sizePolicy)
         self.cmbPresets.setObjectName("cmbPresets")
         self.cmbPresets.addItem(QtCore.QString())
         self.cmbPresets.addItem(QtCore.QString())
@@ -207,7 +212,7 @@ class Ui_RasterCalcDialog(object):
         self.btnClearCommand.setText(QtGui.QApplication.translate("RasterCalcDialog", "Clear", None, QtGui.QApplication.UnicodeUTF8))
         self.btnSaveExpression.setText(QtGui.QApplication.translate("RasterCalcDialog", "Save", None, QtGui.QApplication.UnicodeUTF8))
         self.btnLoadExpression.setText(QtGui.QApplication.translate("RasterCalcDialog", "Load", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("RasterCalcDialog", "Pixel format", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("RasterCalcDialog", "Data type", None, QtGui.QApplication.UnicodeUTF8))
         self.cmbPixelFormat.setItemText(0, QtGui.QApplication.translate("RasterCalcDialog", "Byte", None, QtGui.QApplication.UnicodeUTF8))
         self.cmbPixelFormat.setItemText(1, QtGui.QApplication.translate("RasterCalcDialog", "UInt16", None, QtGui.QApplication.UnicodeUTF8))
         self.cmbPixelFormat.setItemText(2, QtGui.QApplication.translate("RasterCalcDialog", "Int16", None, QtGui.QApplication.UnicodeUTF8))

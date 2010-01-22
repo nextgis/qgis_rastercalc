@@ -222,9 +222,11 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
       setRasters[ r ] = rasterUtils.layerAsArray( self.layerInfo[ r ] )
     rasterUtils.setRasters( setRasters )
 
+    self.statusBar.showMessage( self.tr( "Running..." ) )
+
     expression = rastercalcengine.pattern.parseString( str( self.commandTextEdit.toPlainText() ) )
 
-    self.statusBar.showMessage( self.tr( "Running..." ) )
+    #self.statusBar.showMessage( self.tr( "Running..." ) )
 
     result = rastercalcengine.evaluateStack( rastercalcengine.exprStack )
 
@@ -249,10 +251,9 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     
     # add created layer to the map canvas if neсessary
     if self.loadCheckBox.isChecked():
-      newLayer = QgsRasterLayer( fileName, os.path.basename( fileName ) )
+      newLayer = QgsRasterLayer( fileName, QFileInfo( fileName ).baseName() )
       QgsMapLayerRegistry.instance().addMapLayer( newLayer )
 
-    #self.lblStatusMessage.setText( self.tr( "Completed" ) )
     self.statusBar.showMessage( self.tr( "Completed" ) )
 
   def reject( self ):

@@ -43,7 +43,7 @@ exprStack = []
 rasterList = set()
 
 def rasterName():
-  return Combine( "[" + Word( alphas + nums, alphanums + "_-" ) + "]" )
+  return Combine( "[" + Word( alphas + nums, alphanums + "._-" ) + "]" )
 
 def pushFirst( str, loc, toks ):
     global exprStack
@@ -82,7 +82,7 @@ floatnumber = Combine( integer +
                        Optional( e + integer )
                      )
 
-ident = Combine( "[" + Word( alphas + nums, alphanums + "_-" ) + "]" )
+ident = Combine( "[" + Word( alphas + nums, alphanums + "._-" ) + "]" )
 fn = Word( alphas )
 
 plus  = Literal( "+" )

@@ -223,6 +223,7 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     rasterUtils.setRasters( setRasters )
 
     self.statusBar.showMessage( self.tr( "Running..." ) )
+    QCoreApplication.processEvents()
 
     expression = rastercalcengine.pattern.parseString( str( self.commandTextEdit.toPlainText() ) )
 

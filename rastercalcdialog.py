@@ -106,8 +106,7 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
 
   def manageGui( self ):
     # restore loadCheckBox state
-    settings = QSettings()
-    self.loadCheckBox.setCheckState( settings.value( "/RasterCalc/addLayer", QVariant( False ) ).toInt()[ 0 ] )
+    self.loadCheckBox.setCheckState( rasterUtils.addToCanvas() ) #settings.value( "/RasterCalc/addLayer", QVariant( False ) ).toInt()[ 0 ] )
 
     self.mapLayers = filter( lambda l: l.type() == l.RasterLayer, QgsMapLayerRegistry.instance().mapLayers().values() )
     # get names of all raster layers
@@ -227,8 +226,6 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
 
     expression = rastercalcengine.pattern.parseString( str( self.commandTextEdit.toPlainText() ) )
 
-    #self.statusBar.showMessage( self.tr( "Running..." ) )
-
     result = rastercalcengine.evaluateStack( rastercalcengine.exprStack )
 
     # check is the result array
@@ -248,7 +245,8 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     
     fileName = os.path.normpath( str( self.leFileName.text() ) )
     pixelFormat = str( self.cmbPixelFormat.currentText() )
-    rasterUtils.writeGeoTiff( result, [ extent.xMinimum(), extent.yMinimum(), extent.xMaximum(), extent.yMaximum() ], pixelFormat, fileName )
+    etalon = self.layerInfo[ list ( usedRasters )[ 0 ] ]
+    rasterUtils.writeGeoTiff( result, [ extent.xMinimum(), extent.yMinimum(), extent.xMaximum(), extent.yMaximum() ], pixelFormat, fileName, etalon )
     
     # add created layer to the map canvas if neсessary
     if self.loadCheckBox.isChecked():
@@ -258,8 +256,7 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     self.statusBar.showMessage( self.tr( "Completed" ) )
 
   def reject( self ):
-    settings = QSettings()
-    settings.setValue( "/RasterCalc/addLayer", QVariant( self.loadCheckBox.checkState() )  )
+    rasterUtils.setAddToCanvas( self.loadCheckBox.checkState() )
 
     QDialog.reject( self )
     
@@ -292,7 +289,6 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     
     # check for valid labels
     for l in rastercalcengine.rasterList:
-      #print l
       if l not in self.layerLabels:
         self.statusBar.showMessage( self.tr( "Unknown raster" ) )
         self.buttonOk.setEnabled( False )
@@ -301,7 +297,6 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     # check layers compatibility
     groups = [ self.groups.findGroup( self.layerInfo[ l ] ) for l in rastercalcengine.rasterList ]
     if len( set( groups ) ) != 1:
-      #self.lblStatusMessage.setText( self.tr( "In expression must be layers from one group" ) )
       self.statusBar.showMessage( self.tr( "In expression must be layers from one group" ) )
       self.buttonOk.setEnabled( False )
       return
@@ -311,11 +306,13 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     self.buttonOk.setEnabled( True )
 
   def selectOutputFile( self ):
-    fileName = QFileDialog.getSaveFileName( self, self.tr( "Save GeoTiff file" ), ".", "GTiff (*.tif *tiff *.TIF *.TIFF)" )
+    lastUsedDir = rasterUtils.lastUsedDir()
+    fileName = QFileDialog.getSaveFileName( self, self.tr( "Save GeoTiff file" ), lastUsedDir, "GTiff (*.tif *tiff *.TIF *.TIFF)" )
 
     if fileName.isEmpty():
       return
 
+    rasterUtils.setLastUsedDir( fileName )
     # ensure the user never ommited the extension from the file name
     if not fileName.toLower().endsWith( ".tiff" ):
       if not fileName.toLower().endsWith( ".tif" ):

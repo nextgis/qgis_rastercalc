@@ -30,7 +30,11 @@
 
 from qgis.core import *
 
+from PyQt4.QtCore import *
+
 import osgeo.gdal as gdal
+from osgeo.gdalconst import *
+import osgeo.gdal_array as gdalnumeric
 
 rasterList = {}
 
@@ -156,9 +160,10 @@ def uniqueLabels( names ):
 def layerAsArray( layer ):
   gdalData = gdal.Open( str( layer.source() ) )
   array = gdalData.ReadAsArray()
+  gdalData = None
   return array
 
-def writeGeoTiff( arrayData, extent, pixelFormat, path ):
+def writeGeoTiff( arrayData, extent, pixelFormat, path, layer ):
   format = "GTiff"
   driver = gdal.GetDriverByName( format )
   metadata = driver.GetMetadata()
@@ -181,11 +186,14 @@ def writeGeoTiff( arrayData, extent, pixelFormat, path ):
 
   pixFormat = gdal.GetDataTypeByName( pixelFormat )
 
+  proj = projection( layer )
+
   # could possible to use CreateCopy from one of the input rasters
   dst_ds = driver.Create( path, cols, rows, nbands, pixFormat )
 
   dst_ds.SetGeoTransform( [ extent[ 0 ], ( extent[ 2 ] - extent[ 0 ] ) / cols, 0,
                             extent[ 3 ], 0, ( extent[ 1 ] - extent[ 3 ] ) / rows ] )
+  dst_ds.SetProjection( proj )
 
   if nbands > 1:
     for i in range( nbands ):
@@ -193,7 +201,16 @@ def writeGeoTiff( arrayData, extent, pixelFormat, path ):
   else:
     dst_ds.GetRasterBand( 1 ).WriteArray( arrayData )
 
+  dst_ds = None
   return True
+
+def projection( layer ):
+  gdalData = gdal.Open( str( layer.source() ) )
+  return gdalData.GetProjection()
+  
+def geotransform( layer ):
+  gdalData = gdal.Open( str( layer.source() ) )
+  return gdalData.GetGeoTransform()
 
 def setRasters( rasterDict ):
   global rasterList
@@ -248,4 +265,22 @@ def checkSameAs( a, b ):
     return ( False, a )
 
   raise ValueError, "not numpy or numeric"
+
+# functions to work with plugin settings
+def lastUsedDir():
+  settings = QSettings()
+  return settings.value( "/RasterCalc/lastDir", QVariant( "" ) ).toString()
+
+def setLastUsedDir( lastDir ):
+  path = QFileInfo( lastDir ).absolutePath()
+  settings = QSettings()
+  settings.setValue( "/RasterCalc/lastDir", QVariant( path ) )
+
+def addToCanvas():
+  settings = QSettings()
+  return settings.value( "/RasterCalc/addLayer", QVariant( False ) ).toInt()[ 0 ]
+
+def setAddToCanvas( state ):
+  settings = QSettings()
+  settings.setValue( "/RasterCalc/addLayer", QVariant( state ) )
 

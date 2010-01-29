@@ -34,8 +34,6 @@ from PyQt4.QtGui import *
 from qgis.core import *
 from qgis.gui import *
 
-#import aboutdialog
-
 from __init__ import mVersion
 
 import resources
@@ -65,9 +63,10 @@ class RasterCalcPlugin( object ):
       translationPath = systemPluginPath + "/i18n/rastercalc_" + localeFullName + ".qm"
 
     self.localePath = translationPath
-    self.translator = QTranslator()
-    self.translator.load( self.localePath )
-    QCoreApplication.installTranslator( self.translator )
+    if QFileInfo( self.localePath ).exists():
+      self.translator = QTranslator()
+      self.translator.load( self.localePath )
+      QCoreApplication.installTranslator( self.translator )
       
 
   def initGui( self ):
@@ -131,10 +130,6 @@ class RasterCalcPlugin( object ):
     QObject.connect( btnClose, SIGNAL( "clicked()" ), dlgAbout, SLOT( "close()" ) )
     
     dlgAbout.exec_()
-
-
-    #dlg = aboutdialog.AboutDialog()
-    #dlg.exec_()
 
   def run( self ):
     # check is all necessary modules are available

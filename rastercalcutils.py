@@ -32,9 +32,10 @@ from qgis.core import *
 
 from PyQt4.QtCore import *
 
+import numpy
 import osgeo.gdal as gdal
-from osgeo.gdalconst import *
-import osgeo.gdal_array as gdalnumeric
+#from osgeo.gdalconst import *
+#import osgeo.gdal_array as gdalnumeric
 
 rasterList = {}
 
@@ -159,7 +160,18 @@ def uniqueLabels( names ):
 
 def layerAsArray( layer ):
   gdalData = gdal.Open( str( layer.source() ) )
-  array = gdalData.ReadAsArray()
+  array = gdalData.ReadAsArray().astype( numpy.float32 )
+  gdalData = None
+  return array
+
+def bandAsArray( layer, band ):
+  print "LAYER", str( layer.source() )
+  gdalData = gdal.Open( str( layer.source() ) )
+  #array = gdalnumeric.BandReadAsArray( gdalData.GetRasterBand( band ) )
+  gdalBand = gdalData.GetRasterBand(band)
+  array = gdalBand.ReadAsArray().astype( numpy.float32 )
+  #print "ARRAY", array
+  gdalBand = None
   gdalData = None
   return array
 
@@ -216,8 +228,18 @@ def setRasters( rasterDict ):
   global rasterList
   rasterList = rasterDict
 
+#def getRaster( name ):
+#  return rasterList[ name ]
+
 def getRaster( name ):
-  return rasterList[ name ]
+  #print "getRaster NAME", name
+  #print "getRaster", rasterList[ name ]
+  return layerAsArray( rasterList[ name ] )
+
+def getRasterBand( name, band ):
+  #print "getRasterBand NAME", name
+  #print "getRasterBand", rasterList[ name ]
+  return bandAsArray( rasterList[ name ], band )
 
 def isArray( a ):
   return isNumeric( a ) or isNumpy( a )
@@ -250,6 +272,7 @@ def arrayType( a ):
 def checkSameAs( a, b ):
   aType = arrayType( a )
   bType = arrayType( b )
+  print aType, bType
 
   if aType == bType:
     return ( True, None )

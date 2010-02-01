@@ -209,16 +209,17 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
       self.commandTextEdit.insertPlainText( paren )
 
   def accept( self ):
-    #TODO: добавлять в выходной растр информацию о проекции
     if self.leFileName.text().isEmpty():
       QMessageBox.warning( self, self.tr( "Error" ), self.tr( "Please specify output raster" ) )
       return
 
     rastercalcengine.exprStack = []
     usedRasters = rasterUtils.rasterList
+
     setRasters = dict()
     for r in usedRasters:
-      setRasters[ r ] = rasterUtils.layerAsArray( self.layerInfo[ r ] )
+      #setRasters[ r ] = rasterUtils.layerAsArray( self.layerInfo[ r ] )
+      setRasters[ r ] = self.layerInfo[ r ]
     rasterUtils.setRasters( setRasters )
 
     self.statusBar.showMessage( self.tr( "Running..." ) )
@@ -228,24 +229,33 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
 
     result = rastercalcengine.evaluateStack( rastercalcengine.exprStack )
 
+    print "Eval OK"
+
     # check is the result array
     if not rasterUtils.isArray( result ):
       QMessageBox.warning( self, self.tr( "Error" ), self.tr( "Result is not an array." ) )
       self.statusBar.showMessage( self.tr( "Failed" ) )
       return
 
+    print "Array check Ok"
+
     # time to write results on disk as raster file
     # use the extent of the first layer referenced
+    print "Layer for extent", self.layerInfo[ list( usedRasters )[ 0 ] ]
     extent = rasterUtils.Extent( self.layerInfo[ list( usedRasters )[ 0 ] ] )
 
     # make sure result is numpy/Numeric
-    ( testFlag, res ) = rasterUtils.checkSameAs( result, setRasters[ list( usedRasters )[ 0 ] ] )
-    if not testFlag:
-      result = res
+    #etalonLayer = rasterUtils.getRaster( list( usedRasters )[ 0 ] )
+    #print "Etalon layer", etalonLayer
+    #( testFlag, res ) = rasterUtils.checkSameAs( result, setRasters[ list( usedRasters )[ 0 ] ] )
+    #( testFlag, res ) = rasterUtils.checkSameAs( result, etalonLayer )
+    #if not testFlag:
+    #  result = res
     
     fileName = os.path.normpath( str( self.leFileName.text() ) )
     pixelFormat = str( self.cmbPixelFormat.currentText() )
     etalon = self.layerInfo[ list ( usedRasters )[ 0 ] ]
+    print "Etalon save", etalon
     rasterUtils.writeGeoTiff( result, [ extent.xMinimum(), extent.yMinimum(), extent.xMaximum(), extent.yMaximum() ], pixelFormat, fileName, etalon )
     
     # add created layer to the map canvas if neсessary
@@ -273,7 +283,7 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     self.btnSaveExpression.setEnabled( True )
 
     # check syntax
-    rastercalcengine.rasterList = set( [] )
+    rastercalcengine.rasterNames = set( [] )
     try:
       rastercalcengine.pattern.parseString( str( expr ) )
     except:
@@ -282,20 +292,20 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
       return
     
     # check for layers existense
-    if len( rastercalcengine.rasterList ) < 1:
+    if len( rastercalcengine.rasterNames ) < 1:
       self.statusBar.showMessage( self.tr( "Expression must contain at least one layer" ) )
       self.buttonOk.setEnabled( False )
       return
     
     # check for valid labels
-    for l in rastercalcengine.rasterList:
+    for l in rastercalcengine.rasterNames:
       if l not in self.layerLabels:
         self.statusBar.showMessage( self.tr( "Unknown raster" ) )
         self.buttonOk.setEnabled( False )
         return
 
     # check layers compatibility
-    groups = [ self.groups.findGroup( self.layerInfo[ l ] ) for l in rastercalcengine.rasterList ]
+    groups = [ self.groups.findGroup( self.layerInfo[ l ] ) for l in rastercalcengine.rasterNames ]
     if len( set( groups ) ) != 1:
       self.statusBar.showMessage( self.tr( "In expression must be layers from one group" ) )
       self.buttonOk.setEnabled( False )

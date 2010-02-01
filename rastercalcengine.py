@@ -40,7 +40,7 @@ from pyparsing import Word, alphas, ParseException, Literal, CaselessLiteral, \
 import rastercalcutils as rasterUtils
 
 exprStack = []
-rasterList = set()
+rasterNames = set()
 
 def rasterName():
   return Combine( "[" + Word( alphas + nums, alphanums + "._-" ) + "]" )
@@ -63,13 +63,19 @@ def getBand( data, n ):
   raise ValueError, "array must be with 2 or 3 dimensions"
 
 def assignVar( str, loc, toks ):
-    global rasterList
-    rasterList.add( toks[ 0 ] )
+    global rasterNames
+    rasterNames.add( toks[ 0 ] )
     return toks[ 0 ]
 
-def returnVar( layerName ):
-  global rasterList
+def returnRaster( layerName ):
   return rasterUtils.getRaster( layerName )
+
+def returnBand( layerName, bandNum ):
+  print "in return band"
+  #return rasterUtils.getRasterBand( layerName, bandNum )
+  arr = rasterUtils.getRasterBand( layerName, bandNum )
+  print "band extracted"
+  return arr
 
 # define grammar
 point = Literal( '.' )
@@ -125,6 +131,7 @@ func = { "sin": numpy.sin,
          "tan": numpy.tan,
          "atan": numpy.arctan,
          "exp": numpy.exp,
+
          "log": numpy.log }
 
 # Recursive function that evaluates the stack
@@ -142,14 +149,14 @@ def evaluateStack( s ):
     op1 = evaluateStack( s )
     return func[ op ]( op1 )
   elif re.search('^[\[a-zA-Z][a-zA-Z0-9_\-\]]*$',op):
-    return returnVar( op )
+    #return returnRaster( op )
+    return op
   elif op == "@":
     num = evaluateStack( s )
     lay = evaluateStack( s )
-    return getBand( lay, num )
-#  elif op in func:
-#    op1 = evaluateStack( s )
-#    return func[ op ]( op1 )
+    #return getBand( lay, num )
+    print "EVAL band", num 
+    return returnBand( lay, num )
   elif re.search('^[-+]?[0-9]+$',op):
     return long( op )
   else:

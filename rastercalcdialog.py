@@ -35,6 +35,7 @@ from qgis.core import *
 from qgis.gui import *
 
 import os.path
+import osgeo.gdal as gdal
 
 from rastercalcdialogbase import Ui_RasterCalcDialog
 
@@ -209,8 +210,10 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
       self.commandTextEdit.insertPlainText( paren )
 
   def accept( self ):
+    self.buttonOk.setEnabled( False )
     if self.leFileName.text().isEmpty():
       QMessageBox.warning( self, self.tr( "Error" ), self.tr( "Please specify output raster" ) )
+      self.buttonOk.setEnabled( True )
       return
 
     rastercalcengine.exprStack = []
@@ -218,7 +221,6 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
 
     setRasters = dict()
     for r in usedRasters:
-      #setRasters[ r ] = rasterUtils.layerAsArray( self.layerInfo[ r ] )
       setRasters[ r ] = self.layerInfo[ r ]
     rasterUtils.setRasters( setRasters )
 
@@ -227,22 +229,18 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
 
     expression = rastercalcengine.pattern.parseString( str( self.commandTextEdit.toPlainText() ) )
 
-    result = rastercalcengine.evaluateStack( rastercalcengine.exprStack )
-
-    print "Eval OK"
+    #result = rastercalcengine.evaluateStack( rastercalcengine.exprStack )
 
     # check is the result array
-    if not rasterUtils.isArray( result ):
-      QMessageBox.warning( self, self.tr( "Error" ), self.tr( "Result is not an array." ) )
-      self.statusBar.showMessage( self.tr( "Failed" ) )
-      return
-
-    print "Array check Ok"
+    #if not rasterUtils.isArray( result ):
+    #  QMessageBox.warning( self, self.tr( "Error" ), self.tr( "Result is not an array." ) )
+    #  self.statusBar.showMessage( self.tr( "Failed" ) )
+    #  self.buttonOk.setEnabled( True )
+    #  return
 
     # time to write results on disk as raster file
     # use the extent of the first layer referenced
-    print "Layer for extent", self.layerInfo[ list( usedRasters )[ 0 ] ]
-    extent = rasterUtils.Extent( self.layerInfo[ list( usedRasters )[ 0 ] ] )
+    #extent = rasterUtils.Extent( self.layerInfo[ list( usedRasters )[ 0 ] ] )
 
     # make sure result is numpy/Numeric
     #etalonLayer = rasterUtils.getRaster( list( usedRasters )[ 0 ] )
@@ -255,8 +253,28 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     fileName = os.path.normpath( str( self.leFileName.text() ) )
     pixelFormat = str( self.cmbPixelFormat.currentText() )
     etalon = self.layerInfo[ list ( usedRasters )[ 0 ] ]
-    print "Etalon save", etalon
-    rasterUtils.writeGeoTiff( result, [ extent.xMinimum(), extent.yMinimum(), extent.xMaximum(), extent.yMaximum() ], pixelFormat, fileName, etalon )
+    #rasterUtils.writeGeoTiff( result, [ extent.xMinimum(), extent.yMinimum(), extent.xMaximum(), extent.yMaximum() ], pixelFormat, fileName, etalon )
+
+    ( sizeX, sizeY ) = rasterUtils.rasterSize( list( rastercalcengine.rasterNames )[ 0 ] )
+    blk = 250
+    blk_num = sizeY / blk
+    overhead = sizeY - ( blk_num * blk )
+    outData = rasterUtils.outDataset( fileName, pixelFormat, etalon, sizeX, sizeY )
+    tmpStack = []
+    iter = 0
+    for row in range( blk_num ):
+      tmpStack.extend( rastercalcengine.exprStack )
+      result = rastercalcengine.evaluateStack( tmpStack, iter, sizeX, blk )
+      outData.GetRasterBand( 1 ).WriteArray( result, 0, iter )
+      iter = iter + blk
+      del tmpStack[ : ]
+    if overhead !=0:
+      tmpStack.extend( rastercalcengine.exprStack )
+      result = rastercalcengine.evaluateStack( tmpStack, blk_num*blk, sizeX, overhead )
+      outData.GetRasterBand( 1 ).WriteArray( result, 0, blk_num*blk )
+      del tmpStack[ : ]
+ 
+    outData = None
     
     # add created layer to the map canvas if neсessary
     if self.loadCheckBox.isChecked():
@@ -264,6 +282,7 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
       QgsMapLayerRegistry.instance().addMapLayer( newLayer )
 
     self.statusBar.showMessage( self.tr( "Completed" ) )
+    self.buttonOk.setEnabled( True )
 
   def reject( self ):
     rasterUtils.setAddToCanvas( self.loadCheckBox.checkState() )

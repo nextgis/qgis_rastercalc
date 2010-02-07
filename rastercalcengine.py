@@ -70,12 +70,8 @@ def assignVar( str, loc, toks ):
 def returnRaster( layerName ):
   return rasterUtils.getRaster( layerName )
 
-def returnBand( layerName, bandNum ):
-  print "in return band"
-  #return rasterUtils.getRasterBand( layerName, bandNum )
-  arr = rasterUtils.getRasterBand( layerName, bandNum )
-  print "band extracted"
-  return arr
+def returnBand( layerName, bandNum, row, size, count ):
+  return rasterUtils.getRasterBand( layerName, bandNum, row, size, count )
 
 # define grammar
 point = Literal( '.' )
@@ -131,32 +127,28 @@ func = { "sin": numpy.sin,
          "tan": numpy.tan,
          "atan": numpy.arctan,
          "exp": numpy.exp,
-
          "log": numpy.log }
 
 # Recursive function that evaluates the stack
-def evaluateStack( s ):
+def evaluateStack( s, row, size, count ):
   op = s.pop()
   if op in "+-*/^":
-    op2 = evaluateStack( s )
-    op1 = evaluateStack( s )
+    op2 = evaluateStack( s, row, size, count )
+    op1 = evaluateStack( s, row, size, count )
     return opn[op]( op1, op2 )
   elif op == "PI":
     return math.pi
   elif op == "E":
     return math.e
   elif op in func:
-    op1 = evaluateStack( s )
+    op1 = evaluateStack( s, row, size, count )
     return func[ op ]( op1 )
   elif re.search('^[\[a-zA-Z][a-zA-Z0-9_\-\]]*$',op):
-    #return returnRaster( op )
     return op
   elif op == "@":
-    num = evaluateStack( s )
-    lay = evaluateStack( s )
-    #return getBand( lay, num )
-    print "EVAL band", num 
-    return returnBand( lay, num )
+    num = evaluateStack( s, row, size, count )
+    lay = evaluateStack( s, row, size, count )
+    return returnBand( lay, num, row, size, count )
   elif re.search('^[-+]?[0-9]+$',op):
     return long( op )
   else:

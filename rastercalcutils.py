@@ -34,8 +34,6 @@ from PyQt4.QtCore import *
 
 import numpy
 import osgeo.gdal as gdal
-#from osgeo.gdalconst import *
-#import osgeo.gdal_array as gdalnumeric
 
 rasterList = {}
 
@@ -165,12 +163,9 @@ def layerAsArray( layer ):
   return array
 
 def bandAsArray( layer, band ):
-  print "LAYER", str( layer.source() )
   gdalData = gdal.Open( str( layer.source() ) )
-  #array = gdalnumeric.BandReadAsArray( gdalData.GetRasterBand( band ) )
   gdalBand = gdalData.GetRasterBand(band)
   array = gdalBand.ReadAsArray().astype( numpy.float32 )
-  #print "ARRAY", array
   gdalBand = None
   gdalData = None
   return array
@@ -216,6 +211,24 @@ def writeGeoTiff( arrayData, extent, pixelFormat, path, layer ):
   dst_ds = None
   return True
 
+def outDataset( path, pixelFormat, layer, x, y ):
+  format = "GTiff"
+  driver = gdal.GetDriverByName( format )
+  metadata = driver.GetMetadata()
+  if metadata.has_key( gdal.DCAP_CREATE ) and metadata[ gdal.DCAP_CREATE ] == "YES":
+    pass
+  else:
+    print "Driver %s does not support Create() method." % format
+    return False
+
+  pixFormat = gdal.GetDataTypeByName( pixelFormat )
+  proj = projection( layer )
+  dst_ds = driver.Create( path, x, y, 1, pixFormat )
+  #dst_ds.SetGeoTransform( [ extent[ 0 ], ( extent[ 2 ] - extent[ 0 ] ) / cols, 0,
+  #                          extent[ 3 ], 0, ( extent[ 1 ] - extent[ 3 ] ) / rows ] )
+  dst_ds.SetProjection( proj )
+  return dst_ds
+
 def projection( layer ):
   gdalData = gdal.Open( str( layer.source() ) )
   return gdalData.GetProjection()
@@ -228,18 +241,26 @@ def setRasters( rasterDict ):
   global rasterList
   rasterList = rasterDict
 
-#def getRaster( name ):
-#  return rasterList[ name ]
-
 def getRaster( name ):
-  #print "getRaster NAME", name
-  #print "getRaster", rasterList[ name ]
-  return layerAsArray( rasterList[ name ] )
+  gdalData = gdal.Open( str( rasterList[ name ].source() ) )
+  array = gdalData.ReadAsArray().astype( numpy.float32 )
+  gdalData = None
+  return array
 
-def getRasterBand( name, band ):
-  #print "getRasterBand NAME", name
-  #print "getRasterBand", rasterList[ name ]
-  return bandAsArray( rasterList[ name ], band )
+def getRasterBand( name, band, row, size, count ):
+  gdalData = gdal.Open( str( rasterList[ name ].source() ) )
+  gdalBand = gdalData.GetRasterBand(band)
+  array = gdalBand.ReadAsArray( 0, row, size, count ).astype( numpy.float32 )
+  gdalBand = None
+  gdalData = None
+  return array
+
+def rasterSize( name ):
+  gdalRaster = gdal.Open( str( rasterList[ name ].source() ) )
+  x = gdalRaster.RasterXSize
+  y = gdalRaster.RasterYSize
+  gdalRaster = None
+  return ( x, y )
 
 def isArray( a ):
   return isNumeric( a ) or isNumpy( a )

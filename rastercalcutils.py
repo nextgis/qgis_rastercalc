@@ -194,6 +194,7 @@ def writeGeoTiff( arrayData, extent, pixelFormat, path, layer ):
   pixFormat = gdal.GetDataTypeByName( pixelFormat )
 
   proj = projection( layer )
+  trans = geotransform( layer )
 
   # could possible to use CreateCopy from one of the input rasters
   dst_ds = driver.Create( path, cols, rows, nbands, pixFormat )
@@ -223,10 +224,12 @@ def outDataset( path, pixelFormat, layer, x, y ):
 
   pixFormat = gdal.GetDataTypeByName( pixelFormat )
   proj = projection( layer )
+  trans = geotransform( layer )
   dst_ds = driver.Create( path, x, y, 1, pixFormat )
   #dst_ds.SetGeoTransform( [ extent[ 0 ], ( extent[ 2 ] - extent[ 0 ] ) / cols, 0,
   #                          extent[ 3 ], 0, ( extent[ 1 ] - extent[ 3 ] ) / rows ] )
   dst_ds.SetProjection( proj )
+  dst_ds.SetGeoTransform( trans )
   return dst_ds
 
 def projection( layer ):

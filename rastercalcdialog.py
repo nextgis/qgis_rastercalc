@@ -175,7 +175,7 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
   def insertPreset( self, preset ):
     self.commandTextEdit.clear()
     if preset == "NDVI (TM/ETM+)":
-      self.commandTextEdit.insertPlainText( "( [raster]@3 + [raster]@4 ) / ( [raster]@3 - [raster]@4 )" )
+      self.commandTextEdit.insertPlainText( "( [raster]@4 - [raster]@3 ) / ( [raster]@4 + [raster]@3 )" )
     elif preset == "Difference":
       self.commandTextEdit.insertPlainText( "[raster]@1 - [raster]@2" )
 

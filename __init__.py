@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-mVersion = "0.1.19"
+mVersion = "0.1.20"
 
 #******************************************************************************
 #
 # RasterCalc
 # ---------------------------------------------------------
 # Raster manipulation plugin.
-# 
+#
 # Based on rewritten rasterlang plugin (C) 2008 by Barry Rowlingson
 #
 # Copyright (C) 2009 GIS-Lab (http://gis-lab.info) and
@@ -41,7 +41,7 @@ def version():
 
 def qgisMinimumVersion():
 	return "1.0"
-	
+
 def authorName():
 	return "GIS-Lab and Alexander Bruy"
 

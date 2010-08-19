@@ -5,7 +5,7 @@
 # RasterCalc
 # ---------------------------------------------------------
 # Raster manipulation plugin.
-# 
+#
 # Based on rewritten rasterlang plugin (C) 2008 by Barry Rowlingson
 #
 # Copyright (C) 2009 GIS-Lab (http://gis-lab.info) and
@@ -67,7 +67,7 @@ class RasterCalcPlugin( object ):
       self.translator = QTranslator()
       self.translator.load( self.localePath )
       QCoreApplication.installTranslator( self.translator )
-      
+
 
   def initGui( self ):
     if int( self.QgisVersion ) < 1:
@@ -87,7 +87,7 @@ class RasterCalcPlugin( object ):
     self.iface.addPluginToMenu( "RasterCalc", self.actionAbout )
 
     self.iface.addToolBarIcon( self.actionRun )
- 
+
   def unload( self ):
     self.iface.removePluginMenu( "RasterCalc", self.actionRun )
     self.iface.removePluginMenu( "RasterCalc", self.actionAbout )
@@ -121,14 +121,14 @@ class RasterCalcPlugin( object ):
       link = QLabel( "<a href=\"http://gis-lab.info/qa/rastercalc.html\">http://gis-lab.info/qa/rastercalc.html</a>" )
     else:
       link = QLabel( "<a href=\"http://gis-lab.info/qa/rastercalc-eng.html\">http://gis-lab.info/qa/rastercalc-eng.html</a>" )
-    
+
     link.setOpenExternalLinks( True )
     lines.addWidget( link )
-    
+
     btnClose = QPushButton( QApplication.translate( "RasterCalc", "Close" ) )
     lines.addWidget( btnClose )
     QObject.connect( btnClose, SIGNAL( "clicked()" ), dlgAbout, SLOT( "close()" ) )
-    
+
     dlgAbout.exec_()
 
   def run( self ):
@@ -142,6 +142,10 @@ class RasterCalcPlugin( object ):
     try:
       import osgeo.gdal
     except ImportError, e:
+      try:
+        import gdal
+      except:
+        pass
       QMessageBox.information( self.iface.mainWindow(), QCoreApplication.translate( "RasterCalc", "Plugin error" ), QCoreApplication.translate( "RasterCalc", "Couldn't import Python module 'osgeo.gdal'. Without it you won't be able to run PasterCalc." ) )
       return
 
@@ -152,7 +156,7 @@ class RasterCalcPlugin( object ):
       return
 
     import rastercalcdialog
-      
+
     dlg = rastercalcdialog.RasterCalcDialog()
     dlg.exec_()
 

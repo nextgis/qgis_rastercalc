@@ -93,8 +93,13 @@ mult  = Literal( "*" )
 div   = Literal( "/" )
 lpar  = Literal( "(" ).suppress()
 rpar  = Literal( ")" ).suppress()
+greater       = Combine(Literal(">") + ~Literal("="))
+greater_equal = Combine(Literal(">") + Literal("="))
+less          = Combine(Literal("<") + ~Literal("="))
+less_equal    = Combine(Literal("<") + Literal("="))
 addop  = plus | minus
 multop = mult | div
+compop = less | greater | less_equal | greater_equal
 expop = Literal( "^" )
 assign = Literal( "=" )
 band = Literal( "@" )
@@ -108,7 +113,8 @@ factor = Forward()
 factor << atom + ( ( band + factor ).setParseAction( pushFirst ) | ZeroOrMore( ( expop + factor ).setParseAction( pushFirst ) ) )
         
 term = factor + ZeroOrMore( ( multop + factor ).setParseAction( pushFirst ) )
-expr << term + ZeroOrMore( ( addop + term ).setParseAction( pushFirst ) )
+addterm = term + ZeroOrMore( ( addop + term ).setParseAction( pushFirst ) )
+expr << addterm + ZeroOrMore( ( compop + addterm ).setParseAction( pushFirst ) )
 bnf = expr
 
 pattern =  bnf + StringEnd()
@@ -118,7 +124,11 @@ opn = { "+" : ( lambda a,b: numpy.add( a, b ) ),
         "-" : ( lambda a,b: numpy.subtract( a, b ) ),
         "*" : ( lambda a,b: numpy.multiply( a, b ) ),
         "/" : ( lambda a,b: numpy.divide( a, b ) ),
-        "^" : ( lambda a,b: numpy.power( a, b) ) }
+        "^" : ( lambda a,b: numpy.power( a, b) ),
+        "<" : ( lambda a,b: numpy.less( a, b) ),
+        ">" : ( lambda a,b: numpy.greater( a, b) ),
+        "<=" : ( lambda a,b: numpy.less_equal( a, b) ),
+        ">=" : ( lambda a,b: numpy.greater_equal( a, b) ) }
 
 func = { "sin": numpy.sin,
          "asin": numpy.arcsin,
@@ -132,7 +142,7 @@ func = { "sin": numpy.sin,
 # Recursive function that evaluates the stack
 def evaluateStack( s, row, size, count ):
   op = s.pop()
-  if op in "+-*/^":
+  if op in "+-*/^<>" or op in ['>=','<=']:
     op2 = evaluateStack( s, row, size, count )
     op1 = evaluateStack( s, row, size, count )
     return opn[op]( op1, op2 )

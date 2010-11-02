@@ -252,10 +252,12 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     
     fileName = os.path.normpath( str( self.leFileName.text() ) )
     pixelFormat = str( self.cmbPixelFormat.currentText() )
-    etalon = self.layerInfo[ list ( usedRasters )[ 0 ] ]
+
+    firstusedRaster=list( rastercalcengine.rasterNames )[ 0 ]
+    etalon = self.layerInfo[firstusedRaster]
     #rasterUtils.writeGeoTiff( result, [ extent.xMinimum(), extent.yMinimum(), extent.xMaximum(), extent.yMaximum() ], pixelFormat, fileName, etalon )
 
-    ( sizeX, sizeY ) = rasterUtils.rasterSize( list( rastercalcengine.rasterNames )[ 0 ] )
+    ( sizeX, sizeY ) = rasterUtils.rasterSize( firstusedRaster )
     blk = 250
     blk_num = sizeY / blk
     overhead = sizeY - ( blk_num * blk )

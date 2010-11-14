@@ -78,6 +78,7 @@ class RasterCalcPlugin( object ):
 
     self.actionRun = QAction( QIcon( ":/rastercalc.png" ), "RasterCalc", self.iface.mainWindow() )
     self.actionRun.setStatusTip( QCoreApplication.translate( "RasterCalc", "Perform raster algebra operations" ) )
+    self.actionRun.setWhatsThis( QCoreApplication.translate( "RasterCalc", "Raster algebra" ) )
     self.actionAbout = QAction( QIcon( ":/about.png" ), "About", self.iface.mainWindow() )
 
     QObject.connect( self.actionRun, SIGNAL( "triggered()" ), self.run )

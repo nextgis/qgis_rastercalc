@@ -5,7 +5,7 @@
 # RasterCalc
 # ---------------------------------------------------------
 # Raster manipulation plugin.
-# 
+#
 # Based on rewritten rasterlang plugin (C) 2008 by Barry Rowlingson
 #
 # Copyright (C) 2009 GIS-Lab (http://gis-lab.info) and
@@ -73,11 +73,44 @@ def returnRaster( layerName ):
 def returnBand( layerName, bandNum, row, size, count ):
   return rasterUtils.getRasterBand( layerName, bandNum, row, size, count )
 
+# conditional operators
+def equal( raster, compare, replace ):
+  tmp = numpy.equal( raster, compare )
+  numpy.putmask( raster, tmp, replace )
+  return raster
+
+def greater( raster, compare, replace ):
+  tmp = numpy.greater( raster, compare )
+  numpy.putmask( raster, tmp, replace )
+  return raster
+
+def less( raster, compare, replace ):
+  tmp = numpy.less( raster, compare )
+  numpy.putmask( raster, tmp, replace )
+  return raster
+
+def not_equal( raster, compare, replace ):
+  tmp = numpy.not_equal( raster, compare )
+  numpy.putmask( raster, tmp, replace )
+  return raster
+
+def greater_equal( raster, compare, replace ):
+  tmp = numpy.greater_equal( raster, compare )
+  numpy.putmask( raster, tmp, replace )
+  return raster
+
+def less_equal( raster, compare, replace ):
+  tmp = numpy.less_equal( raster, compare )
+  numpy.putmask( raster, tmp, replace )
+  return raster
+
+
 # define grammar
 point = Literal( '.' )
-e = CaselessLiteral( 'E' )
+colon = Literal( ',' )
+e = CaselessLiteral( 'E' ) # cause wrong detection for functions starting with e!
 plusorminus = Literal( '+' ) | Literal( '-' )
-number = Word( nums ) 
+number = Word( nums )
 integer = Combine( Optional( plusorminus ) + number )
 floatnumber = Combine( integer +
                        Optional( point + Optional( number ) ) +
@@ -105,13 +138,13 @@ assign = Literal( "=" )
 band = Literal( "@" )
 
 expr = Forward()
-atom = ( ( e | floatnumber | integer | ident.setParseAction( assignVar ) | fn + lpar + expr + rpar ).setParseAction(pushFirst) | 
+atom = ( ( e | floatnumber | integer | ident.setParseAction( assignVar ) | fn + lpar + expr + rpar | fn + lpar + expr + colon + expr + colon + expr + rpar ).setParseAction(pushFirst) |
          ( lpar + expr.suppress() + rpar )
        )
-        
+
 factor = Forward()
 factor << atom + ( ( band + factor ).setParseAction( pushFirst ) | ZeroOrMore( ( expop + factor ).setParseAction( pushFirst ) ) )
-        
+
 term = factor + ZeroOrMore( ( multop + factor ).setParseAction( pushFirst ) )
 addterm = term + ZeroOrMore( ( addop + term ).setParseAction( pushFirst ) )
 expr << addterm + ZeroOrMore( ( compop + addterm ).setParseAction( pushFirst ) )
@@ -137,7 +170,13 @@ func = { "sin": numpy.sin,
          "tan": numpy.tan,
          "atan": numpy.arctan,
          "exp": numpy.exp,
-         "log": numpy.log }
+         "log": numpy.log,
+         "eq": equal,
+         "ne": not_equal,
+         "lt": less,
+         "gt": greater,
+         "le": less_equal,
+         "ge": greater_equal }
 
 # Recursive function that evaluates the stack
 def evaluateStack( s, row, size, count ):
@@ -151,6 +190,14 @@ def evaluateStack( s, row, size, count ):
   elif op == "E":
     return math.e
   elif op in func:
+    if op in [ "eq", "ne", "gt", "lt", "ge", "le" ]:
+      replace = evaluateStack( s, row, size, count )
+      compare = evaluateStack( s, row, size, count )
+      inRaster = evaluateStack( s, row, size, count )
+      #print inRaster
+      #print compare
+      #print replace
+      return func[ op ]( inRaster, compare, replace )
     op1 = evaluateStack( s, row, size, count )
     return func[ op ]( op1 )
   elif re.search('^[\[a-zA-Z][a-zA-Z0-9_\-\]]*$',op):
@@ -163,4 +210,3 @@ def evaluateStack( s, row, size, count ):
     return long( op )
   else:
     return float( op )
-

@@ -74,36 +74,35 @@ def returnBand( layerName, bandNum, row, size, count ):
   return rasterUtils.getRasterBand( layerName, bandNum, row, size, count )
 
 # conditional operators
-def equal( raster, compare, replace ):
+def fn_equal( raster, compare, replace ):
   tmp = numpy.equal( raster, compare )
   numpy.putmask( raster, tmp, replace )
   return raster
 
-def greater( raster, compare, replace ):
+def fn_greater( raster, compare, replace ):
   tmp = numpy.greater( raster, compare )
   numpy.putmask( raster, tmp, replace )
   return raster
 
-def less( raster, compare, replace ):
+def fn_less( raster, compare, replace ):
   tmp = numpy.less( raster, compare )
   numpy.putmask( raster, tmp, replace )
   return raster
 
-def not_equal( raster, compare, replace ):
+def fn_not_equal( raster, compare, replace ):
   tmp = numpy.not_equal( raster, compare )
   numpy.putmask( raster, tmp, replace )
   return raster
 
-def greater_equal( raster, compare, replace ):
+def fn_greater_equal( raster, compare, replace ):
   tmp = numpy.greater_equal( raster, compare )
   numpy.putmask( raster, tmp, replace )
   return raster
 
-def less_equal( raster, compare, replace ):
+def fn_less_equal( raster, compare, replace ):
   tmp = numpy.less_equal( raster, compare )
   numpy.putmask( raster, tmp, replace )
   return raster
-
 
 # define grammar
 point = Literal( '.' )
@@ -171,12 +170,12 @@ func = { "sin": numpy.sin,
          "atan": numpy.arctan,
          "exp": numpy.exp,
          "log": numpy.log,
-         "eq": equal,
-         "ne": not_equal,
-         "lt": less,
-         "gt": greater,
-         "le": less_equal,
-         "ge": greater_equal }
+         "eq": fn_equal,
+         "ne": fn_not_equal,
+         "lt": fn_less,
+         "gt": fn_greater,
+         "le": fn_less_equal,
+         "ge": fn_greater_equal }
 
 # Recursive function that evaluates the stack
 def evaluateStack( s, row, size, count ):

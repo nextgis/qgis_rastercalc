@@ -127,16 +127,18 @@ div   = Literal( "/" )
 lpar  = Literal( "(" ).suppress()
 rpar  = Literal( ")" ).suppress()
 
-greater_op       = Combine(Literal(">") + ~Literal("="))
-greater_equal_op = Combine(Literal(">") + Literal("="))
-less_op          = Combine(Literal("<") + ~Literal("="))
-less_equal_op    = Combine(Literal("<") + Literal("="))
+equal_op         = Literal( "=" )
+not_equal_op     = Literal( "!=" )
+greater_op       = Combine( Literal( ">" ) + ~Literal( "=" ) )
+greater_equal_op = Combine( Literal( ">" ) + Literal( "=" ) )
+less_op          = Combine( Literal( "<" ) + ~Literal( "=" ) )
+less_equal_op    = Combine( Literal( "<" ) + Literal( "=" ) )
 
 addop  = plus | minus
 multop = mult | div
-compop = less_op | greater_op | less_equal_op | greater_equal_op
+compop = less_op | greater_op | less_equal_op | greater_equal_op | not_equal_op | equal_op
 expop = Literal( "^" )
-assign = Literal( "=" )
+#assign = Literal( "=" )
 band = Literal( "@" )
 
 expr = Forward()
@@ -162,6 +164,8 @@ opn = { "+" : ( lambda a,b: numpy.add( a, b ) ),
         "^" : ( lambda a,b: numpy.power( a, b) ),
         "<" : ( lambda a,b: numpy.less( a, b) ),
         ">" : ( lambda a,b: numpy.greater( a, b) ),
+        "=" : ( lambda a,b: numpy.equal( a, b) ),
+        "!=" : ( lambda a,b: numpy.not_equal( a, b) ),
         "<=" : ( lambda a,b: numpy.less_equal( a, b) ),
         ">=" : ( lambda a,b: numpy.greater_equal( a, b) ) }
 
@@ -183,7 +187,7 @@ func = { "sin": numpy.sin,
 # Recursive function that evaluates the stack
 def evaluateStack( s, row, size, count ):
   op = s.pop()
-  if op in "+-*/^<>" or op in ['>=','<=']:
+  if op in "+-*/^<>=" or op in [ ">=", "<=", '!=' ]:
     op2 = evaluateStack( s, row, size, count )
     op1 = evaluateStack( s, row, size, count )
     return opn[op]( op1, op2 )

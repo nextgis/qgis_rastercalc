@@ -33,7 +33,7 @@ from __future__ import division
 import re
 import numpy
 
-from pyparsing import Word, alphas, ParseException, Literal, CaselessLiteral, \
+from pyparsing import Word, alphas, ParseException, Literal, CaselessKeyword, \
      Combine, Optional, nums, Or, Forward, ZeroOrMore, StringEnd, alphanums, \
      Regex
 
@@ -74,32 +74,32 @@ def returnBand( layerName, bandNum, row, size, count ):
   return rasterUtils.getRasterBand( layerName, bandNum, row, size, count )
 
 # conditional operators
-def fn_equal( raster, compare, replace ):
+def equal( raster, compare, replace ):
   tmp = numpy.equal( raster, compare )
   numpy.putmask( raster, tmp, replace )
   return raster
 
-def fn_greater( raster, compare, replace ):
+def greater( raster, compare, replace ):
   tmp = numpy.greater( raster, compare )
   numpy.putmask( raster, tmp, replace )
   return raster
 
-def fn_less( raster, compare, replace ):
+def less( raster, compare, replace ):
   tmp = numpy.less( raster, compare )
   numpy.putmask( raster, tmp, replace )
   return raster
 
-def fn_not_equal( raster, compare, replace ):
+def not_equal( raster, compare, replace ):
   tmp = numpy.not_equal( raster, compare )
   numpy.putmask( raster, tmp, replace )
   return raster
 
-def fn_greater_equal( raster, compare, replace ):
+def greater_equal( raster, compare, replace ):
   tmp = numpy.greater_equal( raster, compare )
   numpy.putmask( raster, tmp, replace )
   return raster
 
-def fn_less_equal( raster, compare, replace ):
+def less_equal( raster, compare, replace ):
   tmp = numpy.less_equal( raster, compare )
   numpy.putmask( raster, tmp, replace )
   return raster
@@ -107,7 +107,8 @@ def fn_less_equal( raster, compare, replace ):
 # define grammar
 point = Literal( '.' )
 colon = Literal( ',' )
-e = CaselessLiteral( 'E' ) # cause wrong detection for functions starting with e!
+
+e = CaselessKeyword( 'E' )
 plusorminus = Literal( '+' ) | Literal( '-' )
 number = Word( nums )
 integer = Combine( Optional( plusorminus ) + number )
@@ -125,13 +126,15 @@ mult  = Literal( "*" )
 div   = Literal( "/" )
 lpar  = Literal( "(" ).suppress()
 rpar  = Literal( ")" ).suppress()
-greater       = Combine(Literal(">") + ~Literal("="))
-greater_equal = Combine(Literal(">") + Literal("="))
-less          = Combine(Literal("<") + ~Literal("="))
-less_equal    = Combine(Literal("<") + Literal("="))
+
+greater_op       = Combine(Literal(">") + ~Literal("="))
+greater_equal_op = Combine(Literal(">") + Literal("="))
+less_op          = Combine(Literal("<") + ~Literal("="))
+less_equal_op    = Combine(Literal("<") + Literal("="))
+
 addop  = plus | minus
 multop = mult | div
-compop = less | greater | less_equal | greater_equal
+compop = less_op | greater_op | less_equal_op | greater_equal_op
 expop = Literal( "^" )
 assign = Literal( "=" )
 band = Literal( "@" )
@@ -170,12 +173,12 @@ func = { "sin": numpy.sin,
          "atan": numpy.arctan,
          "exp": numpy.exp,
          "log": numpy.log,
-         "eq": fn_equal,
-         "ne": fn_not_equal,
-         "lt": fn_less,
-         "gt": fn_greater,
-         "le": fn_less_equal,
-         "ge": fn_greater_equal }
+         "eq": equal,
+         "ne": not_equal,
+         "lt": less,
+         "gt": greater,
+         "le": less_equal,
+         "ge": greater_equal }
 
 # Recursive function that evaluates the stack
 def evaluateStack( s, row, size, count ):
@@ -193,10 +196,8 @@ def evaluateStack( s, row, size, count ):
       replace = evaluateStack( s, row, size, count )
       compare = evaluateStack( s, row, size, count )
       inRaster = evaluateStack( s, row, size, count )
-      #print inRaster
-      #print compare
-      #print replace
       return func[ op ]( inRaster, compare, replace )
+    # function with one argument
     op1 = evaluateStack( s, row, size, count )
     return func[ op ]( op1 )
   elif re.search('^[\[a-zA-Z][a-zA-Z0-9_\-\]]*$',op):

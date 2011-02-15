@@ -5,7 +5,7 @@
 # RasterCalc
 # ---------------------------------------------------------
 # Raster manipulation plugin.
-# 
+#
 # Based on rewritten rasterlang plugin (C) 2008 by Barry Rowlingson
 #
 # Copyright (C) 2009 GIS-Lab (http://gis-lab.info) and
@@ -137,7 +137,7 @@ def isCompatible( layer1, layer2 ):
 def uniqueLabels( names ):
   i = 1
   labels = []
-  
+
   from rastercalcengine import rasterName
   from pyparsing import LineStart, LineEnd
 
@@ -158,14 +158,14 @@ def uniqueLabels( names ):
 
 def layerAsArray( layer ):
   gdalData = gdal.Open( str( layer.source() ) )
-  array = gdalData.ReadAsArray().astype( numpy.float32 )
+  array = gdalData.ReadAsArray().astype( numpy.float64 )
   gdalData = None
   return array
 
 def bandAsArray( layer, band ):
   gdalData = gdal.Open( str( layer.source() ) )
   gdalBand = gdalData.GetRasterBand(band)
-  array = gdalBand.ReadAsArray().astype( numpy.float32 )
+  array = gdalBand.ReadAsArray().astype( numpy.float64 )
   gdalBand = None
   gdalData = None
   return array
@@ -235,7 +235,7 @@ def outDataset( path, pixelFormat, layer, x, y ):
 def projection( layer ):
   gdalData = gdal.Open( str( layer.source() ) )
   return gdalData.GetProjection()
-  
+
 def geotransform( layer ):
   gdalData = gdal.Open( str( layer.source() ) )
   return gdalData.GetGeoTransform()
@@ -246,14 +246,14 @@ def setRasters( rasterDict ):
 
 def getRaster( name ):
   gdalData = gdal.Open( str( rasterList[ name ].source() ) )
-  array = gdalData.ReadAsArray().astype( numpy.float32 )
+  array = gdalData.ReadAsArray().astype( numpy.float64 )
   gdalData = None
   return array
 
 def getRasterBand( name, band, row, size, count ):
   gdalData = gdal.Open( str( rasterList[ name ].source() ) )
   gdalBand = gdalData.GetRasterBand(band)
-  array = gdalBand.ReadAsArray( 0, row, size, count ).astype( numpy.float32 )
+  array = gdalBand.ReadAsArray( 0, row, size, count ).astype( numpy.float64 )
   gdalBand = None
   gdalData = None
   return array

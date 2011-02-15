@@ -45,6 +45,9 @@ def qgisMinimumVersion():
 def authorName():
 	return "GIS-Lab and Alexander Bruy"
 
+def icon():
+	return "rastercalc.png"
+
 def classFactory( iface ):
 	from rastercalc import RasterCalcPlugin
 	return RasterCalcPlugin( iface )

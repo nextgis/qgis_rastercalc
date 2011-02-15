@@ -204,7 +204,7 @@ def evaluateStack( s, row, size, count ):
     # function with one argument
     op1 = evaluateStack( s, row, size, count )
     return func[ op ]( op1 )
-  elif re.search('^[\[a-zA-Z][a-zA-Z0-9_\-\]]*$',op):
+  elif re.search('^[\[a-zA-Z][a-zA-Z0-9_\-\.\]]*$',op):
     return op
   elif op == "@":
     num = evaluateStack( s, row, size, count )

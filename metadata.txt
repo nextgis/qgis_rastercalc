@@ -1,0 +1,7 @@
+[general]
+name=RasterCalc
+description=Perform raster algebra operations
+version=Version 0.2.0
+authorName=NextGIS, Alexander Bruy
+icon=rastercalc.png
+qgisMinimumVersion=1.0.0

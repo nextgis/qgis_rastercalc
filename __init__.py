@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-mVersion = "0.2.1"
+mVersion = "0.2.2"
 
 #******************************************************************************
 #
@@ -35,6 +35,9 @@ def name():
 
 def description():
 	return "Perform raster algebra operations"
+
+def category():
+	return "Raster"
 
 def version():
 	return mVersion

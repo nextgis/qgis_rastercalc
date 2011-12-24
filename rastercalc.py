@@ -84,15 +84,24 @@ class RasterCalcPlugin( object ):
     QObject.connect( self.actionRun, SIGNAL( "triggered()" ), self.run )
     QObject.connect( self.actionAbout, SIGNAL( "triggered()" ), self.about )
 
-    self.iface.addPluginToMenu( "RasterCalc", self.actionRun )
-    self.iface.addPluginToMenu( "RasterCalc", self.actionAbout )
-
-    self.iface.addToolBarIcon( self.actionRun )
+    if hasattr( self.iface, "addPluginToRasterMenu" ):
+      self.iface.addPluginToRasterMenu( QCoreApplication.translate( "RasterCalc", "RasterCalc" ), self.actionRun )
+      self.iface.addPluginToRasterMenu( QCoreApplication.translate( "RasterCalc", "RasterCalc" ), self.actionAbout )
+      self.iface.addRasterToolBarIcon( self.actionRun )
+    else:
+      self.iface.addPluginToMenu( QCoreApplication.translate( "RasterCalc", "RasterCalc" ), self.actionRun )
+      self.iface.addPluginToMenu( QCoreApplication.translate( "RasterCalc", "RasterCalc" ), self.actionAbout )
+      self.iface.addToolBarIcon( self.actionRun )
 
   def unload( self ):
-    self.iface.removePluginMenu( "RasterCalc", self.actionRun )
-    self.iface.removePluginMenu( "RasterCalc", self.actionAbout )
-    self.iface.removeToolBarIcon( self.actionRun )
+    if hasattr( self.iface, "addPluginToRasterMenu" ):
+      self.iface.removePluginRasterMenu( QCoreApplication.translate( "RasterCalc", "RasterCalc" ), self.actionRun )
+      self.iface.removePluginRasterMenu( QCoreApplication.translate( "RasterCalc", "RasterCalc" ), self.actionAbout )
+      self.iface.removeRasterToolBarIcon( self.actionRun )
+    else:
+      self.iface.removePluginMenu( QCoreApplication.translate( "RasterCalc", "RasterCalc" ), self.actionRun )
+      self.iface.removePluginMenu( QCoreApplication.translate( "RasterCalc", "RasterCalc" ), self.actionAbout )
+      self.iface.removeToolBarIcon( self.actionRun )
 
   def about( self ):
     dlgAbout = QDialog()

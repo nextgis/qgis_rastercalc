@@ -142,7 +142,7 @@ expop = Literal( "^" )
 band = Literal( "@" )
 
 expr = Forward()
-atom = ( ( e | floatnumber | integer | ident.setParseAction( assignVar ) | fn + lpar + expr + rpar | fn + lpar + expr + colon + expr + colon + expr + rpar ).setParseAction(pushFirst) |
+atom = ( ( e | floatnumber | integer | ident.setParseAction( assignVar ) | fn + lpar + expr + rpar | fn + lpar + expr + colon + expr + rpar | fn + lpar + expr + colon + expr + colon + expr + rpar ).setParseAction(pushFirst) |
          ( lpar + expr.suppress() + rpar )
        )
 
@@ -167,7 +167,8 @@ opn = { "+" : ( lambda a,b: numpy.add( a, b ) ),
         "=" : ( lambda a,b: numpy.equal( a, b) ),
         "!=" : ( lambda a,b: numpy.not_equal( a, b) ),
         "<=" : ( lambda a,b: numpy.less_equal( a, b) ),
-        ">=" : ( lambda a,b: numpy.greater_equal( a, b) ) }
+        ">=" : ( lambda a,b: numpy.greater_equal( a, b) )
+      }
 
 func = { "sin": numpy.sin,
          "asin": numpy.arcsin,
@@ -175,14 +176,19 @@ func = { "sin": numpy.sin,
          "acos": numpy.arccos,
          "tan": numpy.tan,
          "atan": numpy.arctan,
+         "atan2": numpy.arctan2,
          "exp": numpy.exp,
          "log": numpy.log,
+         "log10": numpy.log10,
          "eq": equal,
          "ne": not_equal,
          "lt": less,
          "gt": greater,
          "le": less_equal,
-         "ge": greater_equal }
+         "ge": greater_equal,
+         "min": numpy.minimum,
+         "max": numpy.maximum
+       }
 
 # Recursive function that evaluates the stack
 def evaluateStack( s, row, size, count ):
@@ -201,6 +207,10 @@ def evaluateStack( s, row, size, count ):
       compare = evaluateStack( s, row, size, count )
       inRaster = evaluateStack( s, row, size, count )
       return func[ op ]( inRaster, compare, replace )
+    if op in [ "min", "max" ]:
+      op1 = evaluateStack( s, row, size, count )
+      op2 = evaluateStack( s, row, size, count )
+      return func[ op ]( op1, op2 )
     # function with one argument
     op1 = evaluateStack( s, row, size, count )
     return func[ op ]( op1 )

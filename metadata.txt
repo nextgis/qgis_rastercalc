@@ -2,7 +2,7 @@
 name=RasterCalc
 description=Perform raster algebra operations
 category=Raster
-version=Version 0.2.2
+version=Version 0.2.3
 authorName=NextGIS, Alexander Bruy
 icon=rastercalc.png
 qgisMinimumVersion=1.0.0

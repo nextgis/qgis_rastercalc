@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-mVersion = "0.2.2"
+mVersion = "0.2.3"
 
 #******************************************************************************
 #
@@ -31,27 +31,27 @@ mVersion = "0.2.2"
 #******************************************************************************
 
 def name():
-	return "RasterCalc"
+  return "RasterCalc"
 
 def description():
-	return "Perform raster algebra operations"
+  return "Perform raster algebra operations"
 
 def category():
-	return "Raster"
+  return "Raster"
 
 def version():
-	return mVersion
+  return mVersion
 
 def qgisMinimumVersion():
-	return "1.0"
+  return "1.0"
 
 def authorName():
-	return "GIS-Lab and Alexander Bruy"
+  return "GIS-Lab and Alexander Bruy"
 
 def icon():
-	return "rastercalc.png"
+  return "rastercalc.png"
 
 def classFactory( iface ):
-	from rastercalc import RasterCalcPlugin
-	return RasterCalcPlugin( iface )
+  from rastercalc import RasterCalcPlugin
+  return RasterCalcPlugin( iface )
 

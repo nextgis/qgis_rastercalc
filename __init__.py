@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-mVersion = "0.2.3"
-
 #******************************************************************************
 #
 # RasterCalc
@@ -40,13 +38,13 @@ def category():
   return "Raster"
 
 def version():
-  return mVersion
+  return "0.2.5"
 
 def qgisMinimumVersion():
   return "1.0"
 
 def authorName():
-  return "GIS-Lab and Alexander Bruy"
+  return "Alexander Bruy (NextGIS)"
 
 def icon():
   return "rastercalc.png"

@@ -36,7 +36,7 @@ from qgis.gui import *
 
 from __init__ import mVersion
 
-import resources
+import resources_rc
 
 class RasterCalcPlugin( object ):
   def __init__( self, iface ):

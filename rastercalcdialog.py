@@ -5,7 +5,7 @@
 # RasterCalc
 # ---------------------------------------------------------
 # Raster manipulation plugin.
-# 
+#
 # Based on rewritten rasterlang plugin (C) 2008 by Barry Rowlingson
 #
 # Copyright (C) 2009 GIS-Lab (http://gis-lab.info) and
@@ -37,7 +37,7 @@ from qgis.gui import *
 import os.path
 import osgeo.gdal as gdal
 
-from rastercalcdialogbase import Ui_RasterCalcDialog
+from ui_rastercalcdialogbase import Ui_RasterCalcDialog
 
 import rastercalcengine
 import rastercalcutils as rasterUtils
@@ -50,7 +50,7 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     self.statusBar = QStatusBar()
     self.statusBar.setSizeGripEnabled( False )
     self.verticalLayout_2.addWidget( self.statusBar )
-    
+
     # single operations ( band, power )
     QObject.connect( self.btnPower, SIGNAL( "clicked()" ), self.insertSingleOp )
     QObject.connect( self.btnBand, SIGNAL( "clicked()" ), self.insertSingleOp )
@@ -90,7 +90,7 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
 
     # output raster selection
     QObject.connect( self.btnBrowse, SIGNAL( "clicked()" ), self.selectOutputFile )
- 
+
     # expression manipulating buttons
     QObject.connect( self.btnClearCommand, SIGNAL( "clicked()" ), self.clearExpression )
     QObject.connect( self.btnSaveExpression, SIGNAL( "clicked()" ), self.saveExpression )
@@ -102,7 +102,7 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     self.buttonOk.setEnabled( False )
 
     self.bandNum = "1"
-    
+
     self.manageGui()
 
   def manageGui( self ):
@@ -249,7 +249,7 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     #( testFlag, res ) = rasterUtils.checkSameAs( result, etalonLayer )
     #if not testFlag:
     #  result = res
-    
+
     fileName = os.path.normpath( str( self.leFileName.text() ) )
     pixelFormat = str( self.cmbPixelFormat.currentText() )
 
@@ -275,9 +275,9 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
       result = rastercalcengine.evaluateStack( tmpStack, blk_num*blk, sizeX, overhead )
       outData.GetRasterBand( 1 ).WriteArray( result, 0, blk_num*blk )
       del tmpStack[ : ]
- 
+
     outData = None
-    
+
     # add created layer to the map canvas if neсessary
     if self.loadCheckBox.isChecked():
       newLayer = QgsRasterLayer( fileName, QFileInfo( fileName ).baseName() )
@@ -290,7 +290,7 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
     rasterUtils.setAddToCanvas( self.loadCheckBox.checkState() )
 
     QDialog.reject( self )
-    
+
   def checkExpression( self ):
     expr = self.commandTextEdit.toPlainText()
 
@@ -311,13 +311,13 @@ class RasterCalcDialog( QDialog, Ui_RasterCalcDialog ):
       self.statusBar.showMessage( self.tr( "Syntax error" ) )
       self.buttonOk.setEnabled( False )
       return
-    
+
     # check for layers existense
     if len( rastercalcengine.rasterNames ) < 1:
       self.statusBar.showMessage( self.tr( "Expression must contain at least one layer" ) )
       self.buttonOk.setEnabled( False )
       return
-    
+
     # check for valid labels
     for l in rastercalcengine.rasterNames:
       if l not in self.layerLabels:

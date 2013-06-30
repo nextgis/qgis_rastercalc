@@ -34,7 +34,7 @@ from PyQt4.QtGui import *
 from qgis.core import *
 from qgis.gui import *
 
-from __init__ import mVersion
+from __init__ import version as pluginVer
 
 import resources_rc
 
@@ -110,7 +110,7 @@ class RasterCalcPlugin( object ):
     title = QLabel( QApplication.translate( "RasterCalc", "<b>RasterCalc</b>" ) )
     title.setAlignment( Qt.AlignHCenter | Qt.AlignVCenter )
     lines.addWidget( title )
-    version = QLabel( QApplication.translate( "RasterCalc", "Version: %1" ).arg( mVersion ) )
+    version = QLabel( QApplication.translate( "RasterCalc", "Version: %1" ).arg( pluginVer() ) )
     version.setAlignment( Qt.AlignHCenter | Qt.AlignVCenter )
     lines.addWidget( version )
     lines.addWidget( QLabel( QApplication.translate( "RasterCalc", "This plugin performs arfmethics operations\non single- and multiband rasters" ) ) )
